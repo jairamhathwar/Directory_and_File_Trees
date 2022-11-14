@@ -3,12 +3,12 @@ Assignment 4 readme File
 ------------------------------------------------------------------------
 Student 1: What is your name?
 
-
+Jairam Hathwar 
 
 ------------------------------------------------------------------------
 Student 2: What is your name?
 
-
+None
 
 ------------------------------------------------------------------------
 Student 1: What authorized sources of information did you use to
@@ -17,7 +17,18 @@ information given in the "Policies" web page (also available on armlab
 in the file ~cos217/AuthorizedSourcesList ) to this section of the
 readme file, and edit it as appropriate.
 
+The course's lectures.
 
+The course's precepts.
+
+The course's website.
+
+Documents that are referenced directly by the course's website. 
+Such documents include the course's lecture slides and precept handouts.
+
+The course's textbooks.
+
+The man pages on the armlab cluster.
 
 ------------------------------------------------------------------------
 Student 2: What authorized sources of information did you use to
@@ -26,7 +37,7 @@ information given in the "Policies" web page (also available on armlab
 in the file ~cos217/AuthorizedSourcesList ) to this section of the
 readme file, and edit it as appropriate.
 
-
+N/A
 
 ------------------------------------------------------------------------
 Student 1: What unauthorized sources of information did you use to
@@ -40,7 +51,7 @@ nature of the interaction, may additionally require the interaction
 being reported to the Committee on Discipline. Write "None" if you used
 no unauthorized sources of information.
 
-
+None
 
 ------------------------------------------------------------------------
 Student 2: What unauthorized sources of information did you use to
@@ -54,19 +65,19 @@ nature of the interaction, may additionally require the interaction
 being reported to the Committee on Discipline. Write "None" if you used
 no unauthorized sources of information.
 
-
+N/A
 
 ------------------------------------------------------------------------
 Student 1: What is your assessment of the assignment? Was it helpful?
 Was it fun?
 
-
+It was very tedious but also helped me engrain the fundamentals of C.
 
 ------------------------------------------------------------------------
 Student 2: What is your assessment of the assignment? Was it helpful?
 Was it fun?
 
-
+N/A
 
 ------------------------------------------------------------------------
 (optional) What information can you provide about your submission that
@@ -117,15 +128,15 @@ the error manifests itself or is "noticed" by the client.
 
       Executable         Function with the underlying error
 ===============================================================
-         ./bdtBad1        
+         ./bdtBad1        BDT_insert(const char *pcPath)
 ---------------------------------------------------------------
-         ./bdtBad2        
+         ./bdtBad2        BDT_freeSubtree(struct node *psNode)
 ---------------------------------------------------------------
-         ./bdtBad3        
+         ./bdtBad3        BDT_addChild(struct node *psParent, struct node *psChild)
 ---------------------------------------------------------------
-         ./bdtBad4        
+         ./bdtBad4        BDT_strlenAccumulate(struct node *psNode, size_t *pulAcc)
 ---------------------------------------------------------------
-         ./bdtBad5        
+         ./bdtBad5        BDT_findNode(const char *pcPath, struct node **ppsResult)
 ===============================================================
 
 ------------------------------------------------------------------------
