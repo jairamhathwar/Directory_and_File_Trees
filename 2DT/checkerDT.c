@@ -81,8 +81,8 @@ static boolean CheckerDT_treeCheck(Node_T oNNode) {
                fprintf(stderr, "getNumChildren claims more children than getChild returns\n");
                return FALSE;
             }
-            fprintf(stderr, oNChild);
-            fprintf(stderr, oNChildPrev);
+            fprintf(stderr, Node_toString(oNChild));
+            fprintf(stderr, Node_toString(oNChildPrev));
 
             nodeComparison = Path_comparePath(Node_getPath(oNChild), Node_getPath(oNChildPrev));
             if(nodeComparison == 0) {
