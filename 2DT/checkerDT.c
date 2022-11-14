@@ -76,7 +76,7 @@ static boolean CheckerDT_treeCheck(Node_T oNNode) {
 
          for (i = ulIndex; i > 0; i--) {
             int prevStatus = Node_getChild(oNNode, i, &oNChildPrev);
-            if(Node_getPath(oNChild) == Node_getPath(onChildPrev)) {
+            if(Node_getPath(oNChild) == Node_getPath(oNChildPrev)) {
                fprintf(stderr, "Duplicate path detected in tree\n");
                return FALSE;
             }
