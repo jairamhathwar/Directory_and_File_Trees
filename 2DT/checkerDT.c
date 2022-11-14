@@ -55,6 +55,7 @@ static boolean CheckerDT_treeCheck(Node_T oNNode, size_t *counter) {
    int prevStatus;
    int nodeComparison;
    int iStatus;
+   size_t dirCount = 0;
 
    if(oNNode!= NULL) {
 
@@ -93,14 +94,14 @@ static boolean CheckerDT_treeCheck(Node_T oNNode, size_t *counter) {
                fprintf(stderr, "Children not in lexicographic order\n");
                return FALSE;
             }
-         }                      
+         }
+         dirCount++;
          /* if recurring down one subtree results in a failed check
             farther down, passes the failure back up immediately */
-         if(!CheckerDT_treeCheck(oNChild, &counter))
+         if(!CheckerDT_treeCheck(oNChild, counter))
             return FALSE;
-         
-         *counter++;
       }
+     *counter = dirCount;
    }
    return TRUE;
 }
@@ -108,6 +109,7 @@ static boolean CheckerDT_treeCheck(Node_T oNNode, size_t *counter) {
 /* see checkerDT.h for specification */
 boolean CheckerDT_isValid(boolean bIsInitialized, Node_T oNRoot,
                           size_t ulCount) {
+   
    size_t *counter = 0;
 
    /* Sample check on a top-level data structure invariant:
@@ -119,17 +121,16 @@ boolean CheckerDT_isValid(boolean bIsInitialized, Node_T oNRoot,
       }
    
    /* compare counter with other value (how many nodes should be there)
-   2 if statements */
-   if(CheckerDT_treeCheck(oNRoot, &counter)) {
+      2  if statements */
+   if(CheckerDT_treeCheck(oNRoot, counter)) {
       if (*counter != ulCount) {
          fprintf(stderr, "Total number of directories do not match \n");
          return FALSE;
       }
-      return TRUE;
    }
 
    /* Now checks invariants recursively at each node from the root. */
-   /*return CheckerDT_treeCheck(oNRoot, counter);*/
+   return CheckerDT_treeCheck(oNRoot, counter);
 }
 
 /* dtBad1a, dtBad1b. fix dtBad2 (return false, fprintf), dtBad3, dtBad4
