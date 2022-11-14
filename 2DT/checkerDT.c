@@ -53,6 +53,8 @@ boolean CheckerDT_Node_isValid(Node_T oNNode) {
 static boolean CheckerDT_treeCheck(Node_T oNNode) {
    size_t ulIndex;
    int prevStatus;
+   int nodeComparison;
+   int iStatus;
 
    if(oNNode!= NULL) {
 
@@ -61,12 +63,25 @@ static boolean CheckerDT_treeCheck(Node_T oNNode) {
       if(!CheckerDT_Node_isValid(oNNode))
          return FALSE;
 
+      if (Node_getNumChildren(oNNode)==0) {
+         Node_T oNChild = NULL;
+         iStatus = Node_getChild(oNNode, 0, &oNChild);
+         if (iStatus == SUCCESS) {
+            fprintf(stderr, "errors all around\n");
+            return FALSE;
+         }         
+         /* if recurring down one subtree results in a failed check
+            farther down, passes the failure back up immediately */
+         if(!CheckerDT_treeCheck(oNChild))
+            return FALSE;
+      }
+
       /* Recur on every child of oNNode */
       for(ulIndex = 0; ulIndex < Node_getNumChildren(oNNode); ulIndex++)
       {
          Node_T oNChild = NULL;
          Node_T oNChildPrev = NULL;
-         int iStatus = Node_getChild(oNNode, ulIndex, &oNChild);
+         iStatus = Node_getChild(oNNode, ulIndex, &oNChild);
          
          if(iStatus != SUCCESS) {
             fprintf(stderr, "getNumChildren claims more children than getChild returns\n");
@@ -79,11 +94,12 @@ static boolean CheckerDT_treeCheck(Node_T oNNode) {
                fprintf(stderr, "getNumChildren claims more children than getChild returns\n");
                return FALSE;
             }
-            if(Node_compare(oNChild, oNChildPrev) == 0) {
+            nodeComparison = Node_compare(oNChild, oNChildPrev);
+            if(nodeComparison == 0) {
                fprintf(stderr, "Duplicate path detected in tree\n");
                return FALSE;
             }
-            if(Node_compare(oNChild, oNChildPrev) < 0) {
+            if(nodeComparison < 0) {
                fprintf(stderr, "Children not in lexicographic order\n");
                return FALSE;
             }
