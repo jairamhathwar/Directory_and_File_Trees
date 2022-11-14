@@ -69,18 +69,24 @@ static boolean CheckerDT_treeCheck(Node_T oNNode) {
          int iStatus = Node_getChild(oNNode, ulIndex, &oNChild);
          
          if(iStatus != SUCCESS) {
-            fprintf(stderr, "getNumChildren claims more children than getChild returns\n");
+            fprintf(stderr, "getNumChildren claims more children than 
+            getChild returns\n");
             return FALSE;
          }
 
          if (ulIndex != 0) {
-            prevStatus =  Node_getChild(oNNode, ulIndex-1, &oNChildPrev);
+            prevStatus = Node_getChild(oNNode, ulIndex-1, &oNChildPrev);
             if(prevStatus != SUCCESS) {
-               fprintf(stderr, "getNumChildren claims more children than getChild returns\n");
+               fprintf(stderr, "getNumChildren claims more children than
+                getChild returns\n");
                return FALSE;
             }
             if(Node_compare(oNChild, oNChildPrev) == 0) {
                fprintf(stderr, "Duplicate path detected in tree\n");
+               return FALSE;
+            }
+            if(Node_compare(oNChild, oNChildPrev) < 0) {
+               fprintf(stderr, "Children not in lexicographic order\n");
                return FALSE;
             }
          }                      
