@@ -124,8 +124,8 @@ boolean CheckerDT_isValid(boolean bIsInitialized, Node_T oNRoot,
    if(CheckerDT_treeCheck(oNRoot, &counter)) {
       if (counter != ulCount) {
          fprintf(stderr, "Total number of directories do not match \n");
-         fprintf("%lu", ulCount);
-         fprintf("%lu", counter);
+         fprintf(stderr, "%lu", ulCount);
+         fprintf(stderr, "%lu", counter);
          return FALSE;
       }
       return TRUE;
