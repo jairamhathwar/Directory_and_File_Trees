@@ -50,7 +50,7 @@ boolean CheckerDT_Node_isValid(Node_T oNNode) {
    parameter list to facilitate constructing your checks.
    If you do, you should update this function comment.
 */
-static boolean CheckerDT_treeCheck(Node_T oNNode) {
+static boolean CheckerDT_treeCheck(Node_T oNNode, size_t *counter) {
    size_t ulIndex;
    int prevStatus;
    int nodeComparison;
@@ -62,6 +62,8 @@ static boolean CheckerDT_treeCheck(Node_T oNNode) {
       /* If not, pass that failure back up immediately */
       if(!CheckerDT_Node_isValid(oNNode))
          return FALSE;
+
+      /* in for loop, counter increment for size of tree compare to other value. if different, print error. else, chill */
 
       /* Recur on every child of oNNode */
       for(ulIndex = 0; ulIndex < Node_getNumChildren(oNNode); ulIndex++)
@@ -81,8 +83,6 @@ static boolean CheckerDT_treeCheck(Node_T oNNode) {
                fprintf(stderr, "getNumChildren claims more children than getChild returns\n");
                return FALSE;
             }
-            fprintf(stderr, Node_toString(oNChild));
-            fprintf(stderr, Node_toString(oNChildPrev));
 
             nodeComparison = Path_comparePath(Node_getPath(oNChild), Node_getPath(oNChildPrev));
             if(nodeComparison == 0) {
@@ -98,6 +98,8 @@ static boolean CheckerDT_treeCheck(Node_T oNNode) {
             farther down, passes the failure back up immediately */
          if(!CheckerDT_treeCheck(oNChild))
             return FALSE;
+         
+         *counter++;
       }
    }
    return TRUE;
@@ -106,6 +108,7 @@ static boolean CheckerDT_treeCheck(Node_T oNNode) {
 /* see checkerDT.h for specification */
 boolean CheckerDT_isValid(boolean bIsInitialized, Node_T oNRoot,
                           size_t ulCount) {
+   size_t *counter = 0;
 
    /* Sample check on a top-level data structure invariant:
       if the DT is not initialized, its count should be 0. */
@@ -114,9 +117,19 @@ boolean CheckerDT_isValid(boolean bIsInitialized, Node_T oNRoot,
          fprintf(stderr, "Not initialized, but count is not 0\n");
          return FALSE;
       }
+   
+   /* compare counter with other value (how many nodes should be there)
+   2 if statements */
+   if(CheckerDT_treeCheck(oNRoot, counter)) {
+      if (counter != ulCount) {
+         fprintf(stderr, "Total number of directories do not match \n");
+         return FALSE;
+      }
+      return TRUE;
+   }
 
    /* Now checks invariants recursively at each node from the root. */
-   return CheckerDT_treeCheck(oNRoot);
+   /*return CheckerDT_treeCheck(oNRoot, counter);*/
 }
 
 /* dtBad1a, dtBad1b. fix dtBad2 (return false, fprintf), dtBad3, dtBad4
