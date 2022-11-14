@@ -50,13 +50,12 @@ boolean CheckerDT_Node_isValid(Node_T oNNode) {
    parameter list to facilitate constructing your checks.
    If you do, you should update this function comment.
 */
-static boolean CheckerDT_treeCheck(Node_T oNNode, size_t *counter) {
+static boolean CheckerDT_treeCheck(Node_T oNNode) {
    size_t ulIndex;
    int prevStatus;
    int nodeComparison;
    int iStatus;
-   size_t dirCount = 0;
-
+   
    if(oNNode!= NULL) {
 
       /* Sample check on each node: node must be valid */
@@ -95,13 +94,12 @@ static boolean CheckerDT_treeCheck(Node_T oNNode, size_t *counter) {
                return FALSE;
             }
          }
-         dirCount++;
+         /**counter++;*/
          /* if recurring down one subtree results in a failed check
             farther down, passes the failure back up immediately */
-         if(!CheckerDT_treeCheck(oNChild, counter))
+         if(!CheckerDT_treeCheck(oNChild))
             return FALSE;
       }
-     *counter = dirCount;
    }
    return TRUE;
 }
@@ -110,7 +108,7 @@ static boolean CheckerDT_treeCheck(Node_T oNNode, size_t *counter) {
 boolean CheckerDT_isValid(boolean bIsInitialized, Node_T oNRoot,
                           size_t ulCount) {
    
-   size_t *counter = 0;
+   /*size_t *counter = 0;*/
 
    /* Sample check on a top-level data structure invariant:
       if the DT is not initialized, its count should be 0. */
@@ -121,16 +119,16 @@ boolean CheckerDT_isValid(boolean bIsInitialized, Node_T oNRoot,
       }
    
    /* compare counter with other value (how many nodes should be there)
-      2  if statements */
-   if(CheckerDT_treeCheck(oNRoot, counter)) {
+      2  if statements 
+   if(CheckerDT_treeCheck(oNRoot)) {
       if (*counter != ulCount) {
          fprintf(stderr, "Total number of directories do not match \n");
          return FALSE;
       }
-   }
+   }*/
 
    /* Now checks invariants recursively at each node from the root. */
-   return CheckerDT_treeCheck(oNRoot, counter);
+   return CheckerDT_treeCheck(oNRoot);
 }
 
 /* dtBad1a, dtBad1b. fix dtBad2 (return false, fprintf), dtBad3, dtBad4
