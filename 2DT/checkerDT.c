@@ -94,7 +94,7 @@ static boolean CheckerDT_treeCheck(Node_T oNNode) {
                fprintf(stderr, "getNumChildren claims more children than getChild returns\n");
                return FALSE;
             }
-            nodeComparison = Path_comparePath(oNChild, oNChildPrev);
+            nodeComparison = Path_comparePath(Node_getPath(oNChild), Node_getPath(oNChildPrev));
             if(nodeComparison == 0) {
                fprintf(stderr, "Duplicate path detected in tree\n");
                return FALSE;
