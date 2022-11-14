@@ -81,6 +81,9 @@ static boolean CheckerDT_treeCheck(Node_T oNNode) {
                fprintf(stderr, "getNumChildren claims more children than getChild returns\n");
                return FALSE;
             }
+            fprintf(stderr, oNChild);
+            fprintf(stderr, oNChildPrev);
+
             nodeComparison = Path_comparePath(Node_getPath(oNChild), Node_getPath(oNChildPrev));
             if(nodeComparison == 0) {
                fprintf(stderr, "Duplicate path detected in tree\n");
@@ -91,7 +94,6 @@ static boolean CheckerDT_treeCheck(Node_T oNNode) {
                return FALSE;
             }
          }                      
-
          /* if recurring down one subtree results in a failed check
             farther down, passes the failure back up immediately */
          if(!CheckerDT_treeCheck(oNChild))
