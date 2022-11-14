@@ -52,7 +52,6 @@ boolean CheckerDT_Node_isValid(Node_T oNNode) {
 */
 static boolean CheckerDT_treeCheck(Node_T oNNode) {
    size_t ulIndex;
-   size_t i;
    int prevStatus;
 
    if(oNNode!= NULL) {
@@ -75,7 +74,7 @@ static boolean CheckerDT_treeCheck(Node_T oNNode) {
          }
 
          if (ulIndex != 0) {
-            int prevStatus = Node_getChild(oNNode, ulIndex-1, &oNChildPrev);
+            prevStatus = Node_getChild(oNNode, ulIndex-1, &oNChildPrev);
             if(prevStatus != SUCCESS) {
                fprintf(stderr, "getNumChildren claims more children than getChild returns\n");
                return FALSE;
