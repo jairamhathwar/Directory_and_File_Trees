@@ -57,12 +57,12 @@ static boolean CheckerDT_treeCheck(Node_T oNNode, size_t *dirCount) {
    int iStatus;
    
    if(oNNode!= NULL) {
-      (*dirCount)++;
       /* Sample check on each node: node must be valid */
       /* If not, pass that failure back up immediately */
       if(!CheckerDT_Node_isValid(oNNode))
          return FALSE;
 
+      (*dirCount)++;
       /* in for loop, counter increment for size of tree compare to other value. if different, print error. else, chill */
 
       /* Recur on every child of oNNode */
@@ -94,12 +94,12 @@ static boolean CheckerDT_treeCheck(Node_T oNNode, size_t *dirCount) {
                return FALSE;
             }
          }
-         (*dirCount)++;
-
          /* if recurring down one subtree results in a failed check
             farther down, passes the failure back up immediately */
          if(!CheckerDT_treeCheck(oNChild, dirCount))
             return FALSE;
+
+         (*dirCount)++;
       }
    }
    return TRUE;
@@ -118,11 +118,10 @@ boolean CheckerDT_isValid(boolean bIsInitialized, Node_T oNRoot,
          fprintf(stderr, "Not initialized, but count is not 0\n");
          return FALSE;
       }
-   
+
    /* compare counter with other value (how many nodes should be there)
       2  if statements */
    if(CheckerDT_treeCheck(oNRoot, &counter)) {
-
       if (counter != ulCount) {
          fprintf(stderr, "Total number of directories do not match \n");
          return FALSE;
