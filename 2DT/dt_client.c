@@ -134,6 +134,7 @@ int main(void) {
   */
   assert(DT_insert("a/y") == SUCCESS);
   assert((temp = DT_toString()) != NULL);
+  fprintf(stderr, temp);
   assert(!strcmp(temp,"a\na/y\n"));
   free(temp);
   assert(DT_insert("a/x") == SUCCESS);
