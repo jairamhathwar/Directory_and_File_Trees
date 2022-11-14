@@ -94,7 +94,7 @@ static boolean CheckerDT_treeCheck(Node_T oNNode, size_t *dirCount) {
                return FALSE;
             }
          }
-         *dirCount++;
+         (*dirCount)++;
 
          /* if recurring down one subtree results in a failed check
             farther down, passes the failure back up immediately */
