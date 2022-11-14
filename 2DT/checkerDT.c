@@ -55,8 +55,6 @@ static boolean CheckerDT_treeCheck(Node_T oNNode, size_t *dirCount) {
    int prevStatus;
    int nodeComparison;
    int iStatus;
-
-   assert(dirCount != NULL);
    
    if(oNNode!= NULL) {
 
@@ -111,7 +109,7 @@ static boolean CheckerDT_treeCheck(Node_T oNNode, size_t *dirCount) {
 boolean CheckerDT_isValid(boolean bIsInitialized, Node_T oNRoot,
                           size_t ulCount) {
    
-   size_t counter = 0;
+   size_t counter = 1;
 
    /* Sample check on a top-level data structure invariant:
       if the DT is not initialized, its count should be 0. */
@@ -123,7 +121,7 @@ boolean CheckerDT_isValid(boolean bIsInitialized, Node_T oNRoot,
    
    /* compare counter with other value (how many nodes should be there)
       2  if statements */
-   if(CheckerDT_treeCheck(oNRoot, &counter) == TRUE) {
+   if(CheckerDT_treeCheck(oNRoot, &counter)) {
       if (counter != ulCount) {
          fprintf(stderr, "Total number of directories do not match \n");
          return FALSE;
