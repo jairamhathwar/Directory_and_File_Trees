@@ -57,7 +57,7 @@ static boolean CheckerDT_treeCheck(Node_T oNNode, size_t *dirCount) {
    int iStatus;
 
    assert(dirCount != NULL);
-
+   
    if(oNNode!= NULL) {
 
       /* Sample check on each node: node must be valid */
@@ -127,11 +127,10 @@ boolean CheckerDT_isValid(boolean bIsInitialized, Node_T oNRoot,
          fprintf(stderr, "Total number of directories do not match \n");
          return FALSE;
       }
-      return TRUE;
    }
 
    /* Now checks invariants recursively at each node from the root. */
-   return FALSE;
+   return CheckerDT_treeCheck(oNRoot, &counter);
 }
 
 /* dtBad1a, dtBad1b. fix dtBad2 (return false, fprintf), dtBad3, dtBad4
