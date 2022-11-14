@@ -11,7 +11,6 @@
 #include "path.h"
 
 
-
 /* see checkerDT.h for specification */
 boolean CheckerDT_Node_isValid(Node_T oNNode) {
    Node_T oNParent;
@@ -53,6 +52,8 @@ boolean CheckerDT_Node_isValid(Node_T oNNode) {
 */
 static boolean CheckerDT_treeCheck(Node_T oNNode) {
    size_t ulIndex;
+   size_t i;
+   int prevStatus;
 
    if(oNNode!= NULL) {
 
@@ -65,17 +66,28 @@ static boolean CheckerDT_treeCheck(Node_T oNNode) {
       for(ulIndex = 0; ulIndex < Node_getNumChildren(oNNode); ulIndex++)
       {
          Node_T oNChild = NULL;
+         Node_T oNChildPrev = NULL;
          int iStatus = Node_getChild(oNNode, ulIndex, &oNChild);
-
+         
          if(iStatus != SUCCESS) {
             fprintf(stderr, "getNumChildren claims more children than getChild returns\n");
             return FALSE;
          }
 
+         for (i = ulIndex; i > 0; i--) {
+            int prevStatus = Node_getChild(oNNode, i, &oNChildPrev);
+            if(Node_getPath(oNChild) == Node_getPath(onChildPrev)) {
+               fprintf(stderr, "Duplicate path detected in tree\n");
+               return FALSE;
+            }
+         }              
+
          /* if recurring down one subtree results in a failed check
             farther down, passes the failure back up immediately */
          if(!CheckerDT_treeCheck(oNChild))
             return FALSE;
+
+         oNChildPrev = oNChild;
       }
    }
    return TRUE;
@@ -96,3 +108,8 @@ boolean CheckerDT_isValid(boolean bIsInitialized, Node_T oNRoot,
    /* Now checks invariants recursively at each node from the root. */
    return CheckerDT_treeCheck(oNRoot);
 }
+
+/* dtBad1a, dtBad1b. fix dtBad2 (return false, fprintf), dtBad3, dtBad4
+most is in treecheck. 
+dtBad2 check for duplicate
+*/
