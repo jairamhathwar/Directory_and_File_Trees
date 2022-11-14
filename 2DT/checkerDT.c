@@ -63,19 +63,6 @@ static boolean CheckerDT_treeCheck(Node_T oNNode) {
       if(!CheckerDT_Node_isValid(oNNode))
          return FALSE;
 
-      if (Node_getNumChildren(oNNode)==0) {
-         Node_T oNChild = NULL;
-         iStatus = Node_getChild(oNNode, 0, &oNChild);
-         if (iStatus == SUCCESS) {
-            fprintf(stderr, "errors all around\n");
-            return FALSE;
-         }         
-         /* if recurring down one subtree results in a failed check
-            farther down, passes the failure back up immediately */
-         if(!CheckerDT_treeCheck(oNChild))
-            return FALSE;
-      }
-
       /* Recur on every child of oNNode */
       for(ulIndex = 0; ulIndex < Node_getNumChildren(oNNode); ulIndex++)
       {
