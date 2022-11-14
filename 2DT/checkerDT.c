@@ -94,12 +94,12 @@ static boolean CheckerDT_treeCheck(Node_T oNNode, size_t *dirCount) {
                return FALSE;
             }
          }
+         *dirCount++;
+
          /* if recurring down one subtree results in a failed check
             farther down, passes the failure back up immediately */
          if(!CheckerDT_treeCheck(oNChild, dirCount))
             return FALSE;
-         
-         *dirCount++;
       }
    }
    return TRUE;
@@ -109,7 +109,7 @@ static boolean CheckerDT_treeCheck(Node_T oNNode, size_t *dirCount) {
 boolean CheckerDT_isValid(boolean bIsInitialized, Node_T oNRoot,
                           size_t ulCount) {
    
-   size_t counter = 1;
+   size_t counter = 0;
 
    /* Sample check on a top-level data structure invariant:
       if the DT is not initialized, its count should be 0. */
