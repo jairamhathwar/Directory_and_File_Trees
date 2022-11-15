@@ -122,6 +122,7 @@ boolean CheckerDT_isValid(boolean bIsInitialized, Node_T oNRoot,
 
    /* compare counter with other value (how many nodes should be there)
       2  if statements */
+
    if (oNRoot!=NULL) {
       if(CheckerDT_treeCheck(oNRoot, &counter)) {
          if (counter != ulCount) {
@@ -130,10 +131,11 @@ boolean CheckerDT_isValid(boolean bIsInitialized, Node_T oNRoot,
          }
          return TRUE;
       }
+      return FALSE;
    }
    
    /* Now checks invariants recursively at each node from the root. */
-   return CheckerDT_treeCheck(oNRoot, &counter);
+   return TRUE;
 }
 
 /* dtBad1a, dtBad1b. fix dtBad2 (return false, fprintf), dtBad3, dtBad4
