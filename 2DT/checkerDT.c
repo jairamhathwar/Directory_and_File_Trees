@@ -134,8 +134,3 @@ boolean CheckerDT_isValid(boolean bIsInitialized, Node_T oNRoot,
    }
    return FALSE;
 }
-
-/* dtBad1a, dtBad1b. fix dtBad2 (return false, fprintf), dtBad3, dtBad4
-most is in treecheck. 
-dtBad2 check for duplicate
-*/
