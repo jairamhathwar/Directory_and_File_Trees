@@ -447,6 +447,7 @@ void *FT_getFileContents(const char *pcPath) {
     if(FT_containsFile(pcPath)) {
         iStatus = FT_findNode(pcPath, &oNFound);
     }
+    if(iStatus != SUCCESS) return NULL;
 
     return oNFound->fileContents;
 }
@@ -465,7 +466,8 @@ void *FT_replaceFileContents(const char *pcPath, void *pvNewContents,
         oNFound->fileContents = pvNewContents;
         oNFound->sizeContents = ulNewLength;
     }
-    
+    if(iStatus != SUCCESS) return NULL;
+
     return oNNewNode->fileContents;
 }
 
@@ -478,11 +480,11 @@ int FT_stat(const char *pcPath, boolean *pbIsFile, size_t *pulSize) {
     iStatus = FT_findNode(pcPath, &oNFound);
     if (iStatus == SUCCESS) {
         if (oNFound->ftType) {
-            pbIsFile = TRUE;
-            pulSize = oNFound->sizeContents;
+            *pbIsFile = TRUE;
+            *pulSize = oNFound->sizeContents;
         }
         else {
-            pbIsFile = FALSE;
+            *pbIsFile = FALSE;
         }
     }
     return iStatus;

@@ -302,9 +302,6 @@ size_t Node_free(Node_T oNNode) {
       DynArray_free(oNNode->oDChildren);
    }
    else free(oNNode->fileContents);
-
-   free(oNNode->ftType);
-   free(oNNode->sizeContents);
    /* remove path */
    Path_free(oNNode->oPPath);
 

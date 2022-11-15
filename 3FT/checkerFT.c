@@ -120,7 +120,7 @@ boolean CheckerFT_isValid(boolean bIsInitialized, Node_T oNRoot,
       }
 
    /* compare counter with other value (how many nodes should be there)
-      2  if statements */
+      2 if statements */
 
    if(oNRoot == NULL) return TRUE;
 
