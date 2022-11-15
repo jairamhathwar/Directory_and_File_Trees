@@ -124,17 +124,14 @@ boolean CheckerDT_isValid(boolean bIsInitialized, Node_T oNRoot,
       2  if statements */
    if(CheckerDT_treeCheck(oNRoot, &counter) && oNRoot!=NULL) {
       if (counter != ulCount) {
-         fprintf(stderr, "%lu", ulCount);
-         fprintf(stderr, "%lu", counter);
          fprintf(stderr, "Total number of directories do not match \n");
-
          return FALSE;
       }
       return TRUE;
    }
    
    /* Now checks invariants recursively at each node from the root. */
-   return CheckerDT_treeCheck(oNRoot, &counter);
+   return FALSE;
 }
 
 /* dtBad1a, dtBad1b. fix dtBad2 (return false, fprintf), dtBad3, dtBad4
