@@ -62,7 +62,7 @@ static boolean CheckerDT_treeCheck(Node_T oNNode, size_t *dirCount) {
       if(!CheckerDT_Node_isValid(oNNode))
          return FALSE;
 
-      (*dirCount)++; /* temp variable count. change return type to whatever count. use temp variable to store whatever it's returning*/
+      (dirCount)=(*dirCount) + 1; /* temp variable count. change return type to whatever count. use temp variable to store whatever it's returning*/
       /* in for loop, counter increment for size of tree compare to other value. if different, print error. else, chill */
 
       /* Recur on every child of oNNode */
@@ -94,12 +94,13 @@ static boolean CheckerDT_treeCheck(Node_T oNNode, size_t *dirCount) {
                return FALSE;
             }
          }
+
+         dirCount=(*dirCount) + 1;
+
          /* if recurring down one subtree results in a failed check
             farther down, passes the failure back up immediately */
          if(!CheckerDT_treeCheck(oNChild, dirCount))
             return FALSE;
-
-         (*dirCount)++;
       }
    }
    return TRUE;
@@ -120,7 +121,7 @@ boolean CheckerDT_isValid(boolean bIsInitialized, Node_T oNRoot,
       }
 
    /* compare counter with other value (how many nodes should be there)
-      2  if statements 
+      2  if statements */
    if(CheckerDT_treeCheck(oNRoot, &counter)) {
       if (counter != ulCount) {
          fprintf(stderr, "Total number of directories do not match \n");
@@ -129,7 +130,7 @@ boolean CheckerDT_isValid(boolean bIsInitialized, Node_T oNRoot,
          return FALSE;
       }
       return TRUE;
-   }*/
+   }
    
    /* Now checks invariants recursively at each node from the root. */
    return CheckerDT_treeCheck(oNRoot, &counter);
