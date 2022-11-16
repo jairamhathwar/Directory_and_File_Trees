@@ -46,6 +46,7 @@ size_t getSizeContents(Node_T oNNode) {
 
 void setFileContents(Node_T oNNode, void *pvNewContents) {
    assert(oNNode!=NULL);
+   free(oNNode->fileContents);
    oNNode->fileContents = pvNewContents;
 }
 
