@@ -192,7 +192,8 @@ int Node_newFile(Path_T oPPath, Node_T oNParent, Node_T *poNResult,
    }
 
    /* points to file contents with size of ulNewLength bytes*/ 
-   psNew->fileContents = pvNewContents;
+   psNew->fileContents = malloc(ulNewLength);
+   psNew->fileContents = pvNewContents
    psNew->sizeContents = ulNewLength;
 
    /*update ftType to true*/
