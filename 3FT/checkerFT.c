@@ -132,7 +132,7 @@ boolean CheckerFT_isValid(boolean bIsInitialized, Node_T oNRoot,
 
    if(CheckerFT_treeCheck(oNRoot, &counter)) {
       if (counter != ulCount) {
-         fprintf("%lu %lu", counter, ulCount);
+         fprintf(stderr, "%lu %lu", counter, ulCount);
          /*fprintf(stderr, "Total number of nodes do not match \n");*/
          return FALSE;
       }
