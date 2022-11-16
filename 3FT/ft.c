@@ -317,15 +317,28 @@ int FT_insertFile(const char *pcPath, void *pvContents,
          return iStatus;
       }
 
-      /* insert the new node for this level */
-      iStatus = Node_newFile(oPPrefix, oNCurr, &oNNewNode, pvContents, ulLength);
-      if(iStatus != SUCCESS) {
-         Path_free(oPPath);
-         Path_free(oPPrefix);
-         if(oNFirstNew != NULL)
-            (void) Node_free(oNFirstNew);
-         assert(CheckerFT_isValid(bIsInitialized, oNRoot, ulCount));
-         return iStatus;
+      if(ulIndex == ulDepth) {
+        /* insert the new node for this level */
+        iStatus = Node_newFile(oPPrefix, oNCurr, &oNNewNode, pvContents, ulLength);
+        if(iStatus != SUCCESS) {
+            Path_free(oPPath);
+            Path_free(oPPrefix);
+            if(oNFirstNew != NULL) (void) Node_free(oNFirstNew);
+            assert(CheckerFT_isValid(bIsInitialized, oNRoot, ulCount));
+            return iStatus;
+        }
+      }
+      
+      else {
+        /* insert the new node for this level */
+        iStatus = Node_newDir(oPPrefix, oNCurr, &oNNewNode);
+        if(iStatus != SUCCESS) {
+            Path_free(oPPath);
+            Path_free(oPPrefix);
+            if(oNFirstNew != NULL) (void) Node_free(oNFirstNew);
+            assert(CheckerFT_isValid(bIsInitialized, oNRoot, ulCount));
+            return iStatus;
+        }
       }
 
       /* set up for next level */
