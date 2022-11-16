@@ -381,7 +381,7 @@ int Node_getChild(Node_T oNParent, size_t ulChildID,
 }
 
 Node_T Node_getParent(Node_T oNNode) {
-   /*assert(oNNode != NULL);*/
+   assert(oNNode != NULL);
 
    return oNNode->oNParent;
 }
