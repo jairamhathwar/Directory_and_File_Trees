@@ -107,6 +107,8 @@ int Node_newFile(Path_T oPPath, Node_T oNParent, Node_T *poNResult,
    assert(oPPath != NULL);
    assert(oNParent == NULL || CheckerFT_Node_isValid(oNParent));
 
+   if(getType(oNParent)) return NOT_A_DIRECTORY;
+
    /* allocate space for a new node */
    psNew = malloc(sizeof(struct node));
    if(psNew == NULL) {
@@ -203,6 +205,8 @@ int Node_newDir(Path_T oPPath, Node_T oNParent, Node_T *poNResult) {
 
    assert(oPPath != NULL);
    assert(oNParent == NULL || CheckerFT_Node_isValid(oNParent));
+
+   if(getType(oNParent)) return NOT_A_DIRECTORY;
 
    /* allocate space for a new node */
    psNew = malloc(sizeof(struct node));

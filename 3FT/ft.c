@@ -198,6 +198,10 @@ int FT_insertDir(const char *pcPath) {
    if(oNCurr == NULL) /* new root! */
       ulIndex = 1;
    else {
+      /*if(getType(oNCurr)) {
+         Path_free(oPPath);
+         return NOT_A_DIRECTORY;
+      }*/
       ulIndex = Path_getDepth(Node_getPath(oNCurr))+1;
 
       /* oNCurr is the node we're trying to insert */
@@ -206,10 +210,6 @@ int FT_insertDir(const char *pcPath) {
          Path_free(oPPath);
          return ALREADY_IN_TREE;
       }
-   }
-   if(getType(oNCurr)) {
-         Path_free(oPPath);
-         return NOT_A_DIRECTORY;
    }
 
    /* starting at oNCurr, build rest of the path one level at a time */
