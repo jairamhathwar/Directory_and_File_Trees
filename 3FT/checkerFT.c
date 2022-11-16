@@ -131,7 +131,7 @@ boolean CheckerFT_isValid(boolean bIsInitialized, Node_T oNRoot,
       if (counter != ulCount) {
          printf("%lu", counter);
          printf("%lu", ulCount);
-         fprintf(stderr, "Total number of nodes do not match \n");
+         /*fprintf(stderr, "Total number of nodes do not match \n");*/
          return FALSE;
       }
       return TRUE;
