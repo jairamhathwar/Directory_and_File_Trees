@@ -46,9 +46,10 @@ size_t getSizeContents(Node_T oNNode) {
 
 int setFileContents(Node_T oNNode, void *pvNewContents, size_t ulNewLength) {
    assert(oNNode!=NULL);
-   
-   oNNode->fileContents = realloc(oNNode->fileContents, ulNewLength);
-   if(oNNode->fileContents == NULL) {
+   void* newFileContents;
+
+   newFileContents = malloc(ulNewLength);
+   if(newFileContents == NULL) {
       return MEMORY_ERROR;
    }
    oNNode->fileContents = pvNewContents;
