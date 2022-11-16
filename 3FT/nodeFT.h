@@ -10,6 +10,11 @@
 #include "a4def.h"
 #include "path.h"
 
+boolean getType(Node_T oNNode);
+
+void *getFileContents(Node_T oNNode);
+
+size_t getSizeContents(Node_T oNNode);
 
 /* A Node_T is a node in a Directory Tree */
 typedef struct node *Node_T;
