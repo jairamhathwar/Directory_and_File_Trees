@@ -45,8 +45,9 @@ size_t getSizeContents(Node_T oNNode) {
 }
 
 int setFileContents(Node_T oNNode, void *pvNewContents, size_t ulNewLength) {
-   assert(oNNode!=NULL);
    void* newFileContents;
+   
+   assert(oNNode!=NULL);
 
    newFileContents = malloc(ulNewLength);
    if(newFileContents == NULL) {
