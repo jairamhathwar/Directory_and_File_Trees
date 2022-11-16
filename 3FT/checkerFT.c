@@ -70,37 +70,39 @@ static boolean CheckerFT_treeCheck(Node_T oNNode, size_t *nodeCount) {
          Node_T oNChild = NULL;
          Node_T oNChildPrev = NULL;
          iStatus = Node_getChild(oNNode, ulIndex, &oNChild);
-         
-         if(iStatus != SUCCESS) {
+         if (iStatus == NOT_A_DIRECTORY) {
+            *nodeCount = (*nodeCount)+1;
+         }
+         else if(iStatus != SUCCESS) {
             fprintf(stderr, "getNumChildren claims more children than getChild returns\n");
             return FALSE;
          }
 
-         if (ulIndex != 0) {
+         else {
+            if (ulIndex != 0) {
             prevStatus = Node_getChild(oNNode, ulIndex-1, &oNChildPrev);
             if(prevStatus != SUCCESS) {
                fprintf(stderr, "getNumChildren claims more children than getChild returns\n");
                return FALSE;
-            }
+               }
 
             nodeComparison = Path_comparePath(Node_getPath(oNChild), Node_getPath(oNChildPrev));
             if(nodeComparison == 0) {
                fprintf(stderr, "Duplicate path detected in tree\n");
                return FALSE;
-            }
+               }
             if(nodeComparison < 0) {
                fprintf(stderr, "Children not in lexicographic order\n");
                return FALSE;
+               }
             }
-         }
+            *nodeCount=(*nodeCount) + 1;
 
-         *nodeCount=(*nodeCount) + 1;
-         
-
-         /* if recurring down one subtree results in a failed check
+            /* if recurring down one subtree results in a failed check
             farther down, passes the failure back up immediately */
-         if(!CheckerFT_treeCheck(oNChild, nodeCount))
-            return FALSE;
+            if(!CheckerFT_treeCheck(oNChild, nodeCount))
+               return FALSE;
+         }
       }
    }
    return TRUE;
