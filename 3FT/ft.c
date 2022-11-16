@@ -283,7 +283,7 @@ int FT_insertFile(const char *pcPath, void *pvContents,
    /* no ancestor node found, so if root is not NULL,
       pcPath isn't underneath root. */
 
-   if((oNCurr == NULL && oNRoot != NULL) || Path_getDepth(oPPath) == 0) {
+   if((oNCurr == NULL && oNRoot != NULL) || Path_getDepth(oPPath) == NULL) {
       Path_free(oPPath);
       return CONFLICTING_PATH;
    }
