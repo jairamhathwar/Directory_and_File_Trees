@@ -44,10 +44,13 @@ size_t getSizeContents(Node_T oNNode) {
    return oNNode->sizeContents;
 }
 
-int setFileContents(Node_T oNNode, void *pvNewContents) {
+int setFileContents(Node_T oNNode, void *pvNewContents, size_t ulNewLength) {
    assert(oNNode!=NULL);
    
-   /*free(oNNode->fileContents);*/
+   oNNode->fileContents = realloc(oNNode->fileContents, ulNewLength);
+   if (oNNode->fileContents == NULL) {
+      return MEMORY_ERROR;
+   }
    oNNode->fileContents = pvNewContents;
    return SUCCESS;
 }

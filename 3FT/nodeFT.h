@@ -19,7 +19,7 @@ void *getFileContents(Node_T oNNode);
 
 size_t getSizeContents(Node_T oNNode);
 
-int setFileContents(Node_T oNNode, void *pvNewContents);
+int setFileContents(Node_T oNNode, void *pvNewContents, size_t ulNewLength);
 
 int setSizeContents(Node_T oNNode, size_t ulNewLength);
 
