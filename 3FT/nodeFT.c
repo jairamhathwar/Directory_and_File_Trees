@@ -44,15 +44,18 @@ size_t getSizeContents(Node_T oNNode) {
    return oNNode->sizeContents;
 }
 
-void setFileContents(Node_T oNNode, void *pvNewContents) {
+int setFileContents(Node_T oNNode, void *pvNewContents) {
    assert(oNNode!=NULL);
+   
    /*free(oNNode->fileContents);*/
    oNNode->fileContents = pvNewContents;
+   return SUCCESS;
 }
 
-void setSizeContents(Node_T oNNode, size_t ulNewLength) {
+int setSizeContents(Node_T oNNode, size_t ulNewLength) {
    assert(oNNode!=NULL);
    oNNode->sizeContents = ulNewLength;
+   return SUCCESS;
 }
 
 /*
