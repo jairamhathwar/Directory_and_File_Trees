@@ -193,15 +193,15 @@ int FT_insertDir(const char *pcPath) {
       Path_free(oPPath);
       return CONFLICTING_PATH;
    }
+   if(getType(oNCurr)) {
+      Path_free(oPPath);
+      return NOT_A_DIRECTORY;
+   }
 
    ulDepth = Path_getDepth(oPPath);
    if(oNCurr == NULL) /* new root! */
       ulIndex = 1;
    else {
-      /*if(getType(oNCurr)) {
-         Path_free(oPPath);
-         return NOT_A_DIRECTORY;
-      }*/
       ulIndex = Path_getDepth(Node_getPath(oNCurr))+1;
 
       /* oNCurr is the node we're trying to insert */
@@ -287,10 +287,13 @@ int FT_insertFile(const char *pcPath, void *pvContents,
 
    /* no ancestor node found, so if root is not NULL,
       pcPath isn't underneath root. */
-
    if((oNCurr == NULL && oNRoot != NULL) || Path_getDepth(oPPath) == 1) {
       Path_free(oPPath);
       return CONFLICTING_PATH;
+   }
+   if(getType(oNCurr)) {
+      Path_free(oPPath);
+      return NOT_A_DIRECTORY;
    }
 
    ulDepth = Path_getDepth(oPPath);
