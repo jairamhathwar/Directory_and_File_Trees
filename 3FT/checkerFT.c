@@ -70,6 +70,7 @@ static boolean CheckerFT_treeCheck(Node_T oNNode, size_t *nodeCount) {
          Node_T oNChild = NULL;
          Node_T oNChildPrev = NULL;
          iStatus = Node_getChild(oNNode, ulIndex, &oNChild);
+
          if (iStatus == NOT_A_DIRECTORY) {
             *nodeCount = (*nodeCount)+1;
          }
@@ -80,20 +81,20 @@ static boolean CheckerFT_treeCheck(Node_T oNNode, size_t *nodeCount) {
 
          else {
             if (ulIndex != 0) {
-            prevStatus = Node_getChild(oNNode, ulIndex-1, &oNChildPrev);
-            if(prevStatus != SUCCESS) {
-               fprintf(stderr, "getNumChildren claims more children than getChild returns\n");
-               return FALSE;
+               prevStatus = Node_getChild(oNNode, ulIndex-1, &oNChildPrev);
+               if(prevStatus != SUCCESS) {
+                  fprintf(stderr, "getNumChildren claims more children than getChild returns\n");
+                  return FALSE;
                }
 
-            nodeComparison = Path_comparePath(Node_getPath(oNChild), Node_getPath(oNChildPrev));
-            if(nodeComparison == 0) {
-               fprintf(stderr, "Duplicate path detected in tree\n");
-               return FALSE;
+               nodeComparison = Path_comparePath(Node_getPath(oNChild), Node_getPath(oNChildPrev));
+               if(nodeComparison == 0) {
+                  fprintf(stderr, "Duplicate path detected in tree\n");
+                  return FALSE;
                }
-            if(nodeComparison < 0) {
-               fprintf(stderr, "Children not in lexicographic order\n");
-               return FALSE;
+               if(nodeComparison < 0) {
+                  fprintf(stderr, "Children not in lexicographic order\n");
+                  return FALSE;
                }
             }
             *nodeCount=(*nodeCount) + 1;
@@ -128,6 +129,8 @@ boolean CheckerFT_isValid(boolean bIsInitialized, Node_T oNRoot,
 
    if(CheckerFT_treeCheck(oNRoot, &counter)) {
       if (counter != ulCount) {
+         printf("%lu", counter);
+         printf("%lu", ulCount);
          fprintf(stderr, "Total number of nodes do not match \n");
          return FALSE;
       }
