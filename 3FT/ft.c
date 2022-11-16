@@ -40,6 +40,7 @@ static size_t ulCount;
   Otherwise, sets *poNFurthest to NULL and returns with status:
   * CONFLICTING_PATH if the root's path is not a prefix of oPPath
   * MEMORY_ERROR if memory could not be allocated to complete request
+  * NOT_A_DIRECTORY lasjdf;lkajsdf
 */
 
 static int FT_traversePath(Path_T oPPath, Node_T *poNFurthest) {

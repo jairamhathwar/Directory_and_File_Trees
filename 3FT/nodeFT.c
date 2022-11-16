@@ -274,7 +274,7 @@ int Node_newDir(Path_T oPPath, Node_T oNParent, Node_T *poNResult) {
    }
 
    /* Link into parent's children list */
-   if(oNParent != NULL) {
+   if(oNParent != NULL && !getType(oNParent)) {
       iStatus = Node_addChild(oNParent, psNew, ulIndex);
       if(iStatus != SUCCESS) {
          Path_free(psNew->oPPath);
