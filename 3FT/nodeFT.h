@@ -19,9 +19,9 @@ void *getFileContents(Node_T oNNode);
 
 size_t getSizeContents(Node_T oNNode);
 
-void setFileContents(Node_T oNNode, void *pvNewContents);
+int setFileContents(Node_T oNNode, void *pvNewContents);
 
-void setSizeContents(Node_T oNNode, size_t ulNewLength);
+int setSizeContents(Node_T oNNode, size_t ulNewLength);
 
 /*
   Creates a new node for directory in the Directory Tree, with path 
