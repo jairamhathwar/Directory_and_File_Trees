@@ -53,6 +53,7 @@ int setFileContents(Node_T oNNode, void *pvNewContents, size_t ulNewLength) {
    if(newFileContents == NULL) {
       return MEMORY_ERROR;
    }
+   oNNode->sizeContents = ulNewLength;
    oNNode->fileContents = pvNewContents;
    return SUCCESS;
 }
