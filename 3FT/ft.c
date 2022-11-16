@@ -495,8 +495,9 @@ void *FT_replaceFileContents(const char *pcPath, void *pvNewContents,
 
     assert(pcPath != NULL);
 
-    if(FT_containsFile(pcPath)) {
+    if(FT_containsFile(pcPath) ) {
         iStatus = FT_findNode(pcPath, &oNFound);
+        if (!getType(oNFound)) return NULL;
         if(iStatus != SUCCESS) return NULL;
         oNFound = FT_getFileContents(pcPath);
         oldContents = getFileContents(oNFound);
