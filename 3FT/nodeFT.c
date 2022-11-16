@@ -46,7 +46,7 @@ size_t getSizeContents(Node_T oNNode) {
 
 int setFileContents(Node_T oNNode, void *pvNewContents, size_t ulNewLength) {
    void* newFileContents;
-   
+
    assert(oNNode!=NULL);
 
    newFileContents = malloc(ulNewLength);
@@ -353,8 +353,10 @@ size_t Node_free(Node_T oNNode) {
       }
       DynArray_free(oNNode->oDChildren);
    }
+   if(getType(oNNode)) {
+      free(oNNode->fileContents);
+   }
    
-   free(oNNode->fileContents);
    /* remove path */
    Path_free(oNNode->oPPath);
 
