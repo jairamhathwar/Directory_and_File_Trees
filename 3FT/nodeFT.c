@@ -27,6 +27,18 @@ struct node {
    size_t sizeContents;
 };
 
+static boolean getType(Node_T oNNode) {
+   return oNNode->ftType;
+}
+
+static void *getFileContents(Node_T oNNode) {
+   return oNNode->fileContents;
+}
+
+static size_t getSizeContents(Node_T oNNode) {
+   return oNNode->sizeContents;
+}
+
 /*
   Links new child oNChild into oNParent's children array at index
   ulIndex. Returns SUCCESS if the new child was added successfully,
