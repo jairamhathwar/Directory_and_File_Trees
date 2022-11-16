@@ -165,15 +165,6 @@ int Node_newFile(Path_T oPPath, Node_T oNParent, Node_T *poNResult,
    }
    psNew->oNParent = oNParent;
 
-   /* initialize the new file node */
-   psNew->oDChildren = DynArray_new(0);
-   if(psNew->oDChildren == NULL) {
-      Path_free(psNew->oPPath);
-      free(psNew);
-      *poNResult = NULL;
-      return MEMORY_ERROR;
-   }
-
    /* Link into parent's children list */
    if(oNParent != NULL) {
       iStatus = Node_addChild(oNParent, psNew, ulIndex);
