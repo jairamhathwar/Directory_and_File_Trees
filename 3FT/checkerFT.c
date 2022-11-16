@@ -102,15 +102,13 @@ static boolean CheckerFT_treeCheck(Node_T oNNode, size_t *nodeCount) {
 
             /* if recurring down one subtree results in a failed check
             farther down, passes the failure back up immediately */
-            if(!getType(oNChild)) {
-               if(!CheckerFT_treeCheck(oNChild, nodeCount))
+            if(!CheckerFT_treeCheck(oNChild, nodeCount))
                   return FALSE;
-            }
-            else {
-               *nodeCount=(*nodeCount) + 1;
-            }
          }
       }
+      /* if a file and has no other siblings*/
+      if(getType(oNNode) && Node_getNumChildren(Node_getParent(oNNode) == 1))
+         *nodeCount=(*nodeCount) + 1;
    }
    return TRUE;
 }
