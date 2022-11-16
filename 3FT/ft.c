@@ -434,7 +434,7 @@ int FT_rmFile(const char *pcPath) {
       return NOT_A_FILE;
    }
 
-   free(oNFound->fileContents);
+   free(getfileContents(oNFound));
    ulCount -= Node_free(oNFound);
    if(ulCount == 0)
       oNRoot = NULL;
