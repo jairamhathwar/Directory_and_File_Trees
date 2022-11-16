@@ -177,7 +177,7 @@ int Node_newFile(Path_T oPPath, Node_T oNParent, Node_T *poNResult,
          return iStatus;
       }
    }
-   else if (oNParent != NULL && getType(oNParent){
+   else if (oNParent != NULL && getType(oNParent)){
       Path_free(psNew->oPPath);
       free(psNew);
       *poNResult = NULL;
