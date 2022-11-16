@@ -164,6 +164,9 @@ int Node_newFile(Path_T oPPath, Node_T oNParent, Node_T *poNResult,
       }
    }
    psNew->oNParent = oNParent;
+   
+   /* initialize the new file node */
+   psNew->oDChildren = NULL;
 
    /* Link into parent's children list */
    if(oNParent != NULL) {
@@ -175,9 +178,6 @@ int Node_newFile(Path_T oPPath, Node_T oNParent, Node_T *poNResult,
          return iStatus;
       }
    }
-
-   /* initialize the new file node */
-   psNew->oDChildren = NULL;
 
    /* points to file contents with size of ulNewLength bytes*/ 
    psNew->fileContents = pvNewContents;
