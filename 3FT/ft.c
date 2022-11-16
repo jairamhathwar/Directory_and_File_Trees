@@ -193,10 +193,10 @@ int FT_insertDir(const char *pcPath) {
       Path_free(oPPath);
       return CONFLICTING_PATH;
    }
-   if(getType(oNCurr)) {
+   /*if(getType(oNCurr)) {
       Path_free(oPPath);
       return NOT_A_DIRECTORY;
-   }
+   }*/
 
    ulDepth = Path_getDepth(oPPath);
    if(oNCurr == NULL) /* new root! */
@@ -291,10 +291,10 @@ int FT_insertFile(const char *pcPath, void *pvContents,
       Path_free(oPPath);
       return CONFLICTING_PATH;
    }
-   if(getType(oNCurr)) {
+   /*if(getType(oNCurr)) {
       Path_free(oPPath);
       return NOT_A_DIRECTORY;
-   }
+   }*/
 
    ulDepth = Path_getDepth(oPPath);
    if(oNCurr == NULL) /* new root! */
