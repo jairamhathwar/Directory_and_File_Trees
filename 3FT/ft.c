@@ -505,9 +505,9 @@ void *FT_replaceFileContents(const char *pcPath, void *pvNewContents,
         if(iStatus != SUCCESS) return NULL;
         iStatus = setSizeContents(oNFound, ulNewLength);
         if(iStatus != SUCCESS) return NULL;
-    } 
-
-    return oldContents;
+        return oldContents;
+    }
+    return NULL;    
 }
 
 int FT_stat(const char *pcPath, boolean *pbIsFile, size_t *pulSize) {
