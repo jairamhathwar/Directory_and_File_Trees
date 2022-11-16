@@ -434,10 +434,11 @@ int FT_rmFile(const char *pcPath) {
       return NOT_A_FILE;
    }
 
+   free(oNFound->fileContents);
    ulCount -= Node_free(oNFound);
    if(ulCount == 0)
       oNRoot = NULL;
-
+   
    assert(CheckerFT_isValid(bIsInitialized, oNRoot, ulCount));
    return SUCCESS;
 }
