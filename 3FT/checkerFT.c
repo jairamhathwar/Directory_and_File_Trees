@@ -60,6 +60,8 @@ static boolean CheckerFT_treeCheck(Node_T oNNode, size_t *nodeCount) {
       /* If not, pass that failure back up immediately */
       if(!CheckerFT_Node_isValid(oNNode))
          return FALSE;
+      
+      if (Node_getNumChildren(oNNode) == 0) *nodeCount = (*nodeCount)+1;
 
       /* temp variable count. change return type to whatever count. use temp variable to store whatever it's returning*/
       /* in for loop, counter increment for size of tree compare to other value. if different, print error. else, chill */
