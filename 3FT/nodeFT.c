@@ -28,15 +28,28 @@ struct node {
 };
 
 boolean getType(Node_T oNNode) {
+   assert(oNNode!=NULL);
    return oNNode->ftType;
 }
 
 void *getFileContents(Node_T oNNode) {
+   assert(oNNode!=NULL);
    return oNNode->fileContents;
 }
 
 size_t getSizeContents(Node_T oNNode) {
+   assert(oNNode!=NULL);
    return oNNode->sizeContents;
+}
+
+void setFileContents(Node_T oNNode, void *pvNewContents) {
+   assert(oNNode!=NULL);
+   oNNode->fileContents = pvNewContents;
+}
+
+void setSizeContents(Node_T oNNode, size_t ulNewLength) {
+   assert(oNNode!=NULL);
+   oNNode->sizeContents = ulNewLength;
 }
 
 /*

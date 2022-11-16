@@ -456,19 +456,20 @@ void *FT_replaceFileContents(const char *pcPath, void *pvNewContents,
                              size_t ulNewLength) {
     int iStatus;
     Node_T oNFound = NULL;
-    Node_T oNNewNode = NULL;
+    void* oldContents;
 
     assert(pcPath != NULL);
 
     if(FT_containsFile(pcPath)) {
         oNFound = FT_getFileContents(pcPath);
-        getFileContents(oNNewNode) = getFileContents(oNFound);
-        getFileContents(oNFound) = pvNewContents;
-        getSizeContents(oNFound) = ulNewLength;
+        oldContents = getFileContents(oNFound);
+
+        setFileContents(oNFound, pvNewContents);
+        setSizeContents(oNFound, ulNewLength);
     }
     if(iStatus != SUCCESS) return NULL;
 
-    return getFileContents(oNNewNode);
+    return oldContents;
 }
 
 int FT_stat(const char *pcPath, boolean *pbIsFile, size_t *pulSize) {
