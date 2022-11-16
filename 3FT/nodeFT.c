@@ -166,7 +166,7 @@ int Node_newFile(Path_T oPPath, Node_T oNParent, Node_T *poNResult,
    psNew->oNParent = oNParent;
 
    /* Link into parent's children list */
-   if(oNParent != NULL) {
+   if(oNParent != NULL && !getType(oNParent)) {
       iStatus = Node_addChild(oNParent, psNew, ulIndex);
       if(iStatus != SUCCESS) {
          Path_free(psNew->oPPath);
