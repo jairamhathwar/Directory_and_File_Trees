@@ -164,9 +164,15 @@ int Node_newFile(Path_T oPPath, Node_T oNParent, Node_T *poNResult,
       }
    }
    psNew->oNParent = oNParent;
-   
+
    /* initialize the new file node */
-   psNew->oDChildren = NULL;
+   psNew->oDChildren = DynArray_new(0);
+   if(psNew->oDChildren == NULL) {
+      Path_free(psNew->oPPath);
+      free(psNew);
+      *poNResult = NULL;
+      return MEMORY_ERROR;
+   }
 
    /* Link into parent's children list */
    if(oNParent != NULL) {
@@ -319,13 +325,11 @@ size_t Node_free(Node_T oNNode) {
                                   ulIndex);
    }
 
-   if (!oNNode->ftType) {
       /* recursively remove children */
       while(DynArray_getLength(oNNode->oDChildren) != 0) {
          ulCount += Node_free(DynArray_get(oNNode->oDChildren, 0));
       }
       DynArray_free(oNNode->oDChildren);
-   }
    else free(oNNode->fileContents);
    /* remove path */
    Path_free(oNNode->oPPath);
