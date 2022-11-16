@@ -82,7 +82,7 @@ static boolean CheckerFT_treeCheck(Node_T oNNode, size_t *nodeCount) {
          else {
             if (ulIndex != 0) {
                prevStatus = Node_getChild(oNNode, ulIndex-1, &oNChildPrev);
-               if(prevStatus != SUCCESS) {
+               if(prevStatus != SUCCESS && prevStatus != NOT_A_DIRECTORY) {
                   fprintf(stderr, "getNumChildren claims more children than getChild returns\n");
                   return FALSE;
                }
