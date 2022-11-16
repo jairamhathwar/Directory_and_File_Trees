@@ -25,6 +25,8 @@ struct node {
    void* fileContents;
    /* size of contents*/
    size_t sizeContents;
+   /* number of files in hierarchy*/
+   size_t numFiles;
 };
 
 boolean getType(Node_T oNNode) {

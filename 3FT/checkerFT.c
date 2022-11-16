@@ -5,7 +5,7 @@
 
 #include <assert.h>
 #include <stdio.h>
-#include <string.h>
+#include <string.h>  
 #include "checkerFT.h"
 #include "dynarray.h"
 #include "path.h"
@@ -49,7 +49,7 @@ boolean CheckerFT_Node_isValid(Node_T oNNode) {
    parameter list to facilitate constructing your checks.
    If you do, you should update this function comment.
 */
-static boolean CheckerFT_treeCheck(Node_T oNNode, size_t *dirCount) {
+static boolean CheckerFT_treeCheck(Node_T oNNode, size_t *nodeCount) {
    size_t ulIndex;
    int prevStatus;
    int nodeComparison;
@@ -94,11 +94,12 @@ static boolean CheckerFT_treeCheck(Node_T oNNode, size_t *dirCount) {
             }
          }
 
-         *dirCount=(*dirCount) + 1;
+         *nodeCount=(*nodeCount) + 1;
+         
 
          /* if recurring down one subtree results in a failed check
             farther down, passes the failure back up immediately */
-         if(!CheckerFT_treeCheck(oNChild, dirCount))
+         if(!CheckerFT_treeCheck(oNChild, nodeCount))
             return FALSE;
       }
    }
@@ -108,7 +109,6 @@ static boolean CheckerFT_treeCheck(Node_T oNNode, size_t *dirCount) {
 /* see checkerFT.h for specification */
 boolean CheckerFT_isValid(boolean bIsInitialized, Node_T oNRoot,
                           size_t ulCount) {
-   
    size_t counter = 1;
 
    /* Sample check on a top-level data structure invariant:
@@ -121,12 +121,12 @@ boolean CheckerFT_isValid(boolean bIsInitialized, Node_T oNRoot,
 
    /* compare counter with other value (how many nodes should be there)
       2 if statements */
-
    if(oNRoot == NULL) return TRUE;
+   if(getType(oNRoot)) FALSE;
 
    if(CheckerFT_treeCheck(oNRoot, &counter)) {
       if (counter != ulCount) {
-         fprintf(stderr, "Total number of directories do not match \n");
+         fprintf(stderr, "Total number of nodes do not match \n");
          return FALSE;
       }
       return TRUE;
