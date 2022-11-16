@@ -330,7 +330,7 @@ size_t Node_free(Node_T oNNode) {
          ulCount += Node_free(DynArray_get(oNNode->oDChildren, 0));
       }
       DynArray_free(oNNode->oDChildren);
-   else free(oNNode->fileContents);
+   free(oNNode->fileContents);
    /* remove path */
    Path_free(oNNode->oPPath);
 
