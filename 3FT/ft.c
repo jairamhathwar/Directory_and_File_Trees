@@ -354,6 +354,7 @@ boolean FT_containsDir(const char *pcPath) {
    assert(pcPath != NULL);
 
    iStatus = FT_findNode(pcPath, &oNFound);
+   if(getType(oNFound)) return FALSE;
    return (boolean) (iStatus == SUCCESS);
 }
 
@@ -364,6 +365,7 @@ boolean FT_containsFile(const char *pcPath) {
    assert(pcPath != NULL);
 
    iStatus = FT_findNode(pcPath, &oNFound);
+   if(!getType(oNFound)) return FALSE;
    return (boolean) (iStatus == SUCCESS);
 }
 
