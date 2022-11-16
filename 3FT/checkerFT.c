@@ -86,16 +86,17 @@ static boolean CheckerFT_treeCheck(Node_T oNNode, size_t *nodeCount) {
                   fprintf(stderr, "getNumChildren claims more children than getChild returns\n");
                   return FALSE;
                }
-
-               nodeComparison = Path_comparePath(Node_getPath(oNChild), Node_getPath(oNChildPrev));
-               if(nodeComparison == 0) {
-                  fprintf(stderr, "Duplicate path detected in tree\n");
-                  return FALSE;
-               }
-               if(nodeComparison < 0) {
-                  fprintf(stderr, "Children not in lexicographic order\n");
-                  return FALSE;
-               }
+               if(prevStatus != NOT_A_DIRECTORY) {
+                  nodeComparison = Path_comparePath(Node_getPath(oNChild), Node_getPath(oNChildPrev));
+                  if(nodeComparison == 0) {
+                     fprintf(stderr, "Duplicate path detected in tree\n");
+                     return FALSE;
+                  }
+                  if(nodeComparison < 0) {
+                     fprintf(stderr, "Children not in lexicographic order\n");
+                     return FALSE;
+                  }
+               }               
             }
             *nodeCount=(*nodeCount) + 1;
 
