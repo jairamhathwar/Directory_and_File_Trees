@@ -48,7 +48,7 @@ int setFileContents(Node_T oNNode, void *pvNewContents, size_t ulNewLength) {
    assert(oNNode!=NULL);
    
    oNNode->fileContents = realloc(oNNode->fileContents, ulNewLength);
-   if (oNNode->fileContents == NULL) {
+   if(oNNode->fileContents == NULL) {
       return MEMORY_ERROR;
    }
    oNNode->fileContents = pvNewContents;
@@ -193,6 +193,12 @@ int Node_newFile(Path_T oPPath, Node_T oNParent, Node_T *poNResult,
 
    /* points to file contents with size of ulNewLength bytes*/ 
    psNew->fileContents = malloc(ulNewLength);
+   if(psNew->fileContents == NULL) {
+      Path_free(psNew->oPPath);
+      free(psNew);
+      *poNResult = NULL;
+      return MEMORY_ERROR;
+   }
    psNew->fileContents = pvNewContents;
    psNew->sizeContents = ulNewLength;
 
