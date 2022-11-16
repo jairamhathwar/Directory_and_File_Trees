@@ -107,7 +107,7 @@ static boolean CheckerFT_treeCheck(Node_T oNNode, size_t *nodeCount) {
          }
       }
       /* if a file and has no other siblings*/
-      if(getType(oNNode) && Node_getNumChildren(Node_getParent(oNNode) == 1))
+      if(getType(oNNode) && Node_getNumChildren(Node_getParent(oNNode)) == 1)
          *nodeCount=(*nodeCount) + 1;
    }
    return TRUE;
