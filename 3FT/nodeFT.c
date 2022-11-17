@@ -391,7 +391,7 @@ Path_T Node_getPath(Node_T oNNode) {
 }
 
 boolean Node_hasFileChild(Node_T oNParent, Path_T oPPath,
-                         size_t *pulChildID {
+                         size_t *pulChildID) {
    assert(oNParent != NULL);
    assert(oPPath != NULL);
    assert(pulChildID != NULL);
@@ -405,7 +405,7 @@ boolean Node_hasFileChild(Node_T oNParent, Path_T oPPath,
 }
 
 boolean Node_hasDirChild(Node_T oNParent, Path_T oPPath,
-                         size_t *pulChildID {
+                         size_t *pulChildID) {
    assert(oNParent != NULL);
    assert(oPPath != NULL);
    assert(pulChildID != NULL);
