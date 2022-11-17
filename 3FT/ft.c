@@ -493,6 +493,7 @@ static void FT_strcatAccumulate(Node_T oNNode, char *pcAcc) {
 /*--------------------------------------------------------------------*/
 char *FT_toString(void) {
    size_t j;
+   size_t newIndex = 0;
    DynArray_T nodes;
 
    DynArray_T newNodes;
@@ -506,15 +507,17 @@ char *FT_toString(void) {
    newNodes = DynArray_new(ulCount);
 
    (void) FT_preOrderTraversal(oNRoot, nodes, 0);
-   
+
    for(j = 0; j < DynArray_getLength(nodes); j++) {
       if(getType(DynArray_get(nodes, j))) {
-         (void) DynArray_set(newNodes, j, DynArray_get(nodes, j));
+         (void) DynArray_set(newNodes, newIndex, DynArray_get(nodes, j));
+         newIndex++;
       } 
    }
    for(j = 0; j < DynArray_getLength(nodes); j++) {
       if(!getType(DynArray_get(nodes, j))) {
-         (void) DynArray_set(newNodes, j, DynArray_get(nodes, j));
+         (void) DynArray_set(newNodes, newIndex, DynArray_get(nodes, j));
+         newIndex++;
       }
    }
 
