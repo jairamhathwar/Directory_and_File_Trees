@@ -463,7 +463,7 @@ static size_t FT_preOrderTraversal(Node_T n, DynArray_T d, size_t i) {
          Node_T oNChild = NULL;
          iStatus = Node_getChild(n,c, &oNChild);
          assert(iStatus == SUCCESS);
-         if(getType(n))
+         if(getType(oNChild))
             i = FT_preOrderTraversal(oNChild, d, i);
       }
       for(c = 0; c < Node_getNumChildren(n); c++) {
@@ -471,7 +471,7 @@ static size_t FT_preOrderTraversal(Node_T n, DynArray_T d, size_t i) {
          Node_T oNChild = NULL;
          iStatus = Node_getChild(n,c, &oNChild);
          assert(iStatus == SUCCESS);
-         if(!getType(n))
+         if(!getType(oNChild))
             i = FT_preOrderTraversal(oNChild, d, i);
       }
    }
@@ -501,7 +501,7 @@ static void FT_strcatAccumulate(Node_T oNNode, char *pcAcc) {
 }
 /*--------------------------------------------------------------------*/
 char *FT_toString(void) {
-   size_t j;
+   /*size_t j;*/
    /*size_t newIndex = 0;*/
    DynArray_T nodes;
 
