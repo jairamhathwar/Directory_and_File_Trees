@@ -463,7 +463,16 @@ static size_t FT_preOrderTraversal(Node_T n, DynArray_T d, size_t i) {
          Node_T oNChild = NULL;
          iStatus = Node_getChild(n,c, &oNChild);
          assert(iStatus == SUCCESS);
-         i = FT_preOrderTraversal(oNChild, d, i);
+         if(getType(n))
+            i = FT_preOrderTraversal(oNChild, d, i);
+      }
+      for(c = 0; c < Node_getNumChildren(n); c++) {
+         int iStatus;
+         Node_T oNChild = NULL;
+         iStatus = Node_getChild(n,c, &oNChild);
+         assert(iStatus == SUCCESS);
+         if(!getType(n))
+            i = FT_preOrderTraversal(oNChild, d, i);
       }
    }
    return i;
@@ -493,10 +502,10 @@ static void FT_strcatAccumulate(Node_T oNNode, char *pcAcc) {
 /*--------------------------------------------------------------------*/
 char *FT_toString(void) {
    size_t j;
-   size_t newIndex = 0;
+   /*size_t newIndex = 0;*/
    DynArray_T nodes;
 
-   DynArray_T newNodes;
+   /*DynArray_T newNodes;*/
 
    size_t totalStrlen = 1;
    char *result = NULL;
@@ -504,11 +513,11 @@ char *FT_toString(void) {
       return NULL;
    nodes = DynArray_new(ulCount);
 
-   newNodes = DynArray_new(ulCount);
+   /*newNodes = DynArray_new(ulCount);*/
 
    (void) FT_preOrderTraversal(oNRoot, nodes, 0);
 
-   for(j = 0; j < DynArray_getLength(nodes); j++) {
+   /*for(j = 0; j < DynArray_getLength(nodes); j++) {
       if(getType(DynArray_get(nodes, j))) {
          (void) DynArray_set(newNodes, newIndex, DynArray_get(nodes, j));
          newIndex++;
@@ -519,20 +528,20 @@ char *FT_toString(void) {
          (void) DynArray_set(newNodes, newIndex, DynArray_get(nodes, j));
          newIndex++;
       }
-   }
+   }*/
 
-   DynArray_map(newNodes, (void (*)(void *, void*)) FT_strlenAccumulate,
+   DynArray_map(nodes, (void (*)(void *, void*)) FT_strlenAccumulate,
                 (void*) &totalStrlen);
    result = malloc(totalStrlen);
    if(result == NULL) {
       DynArray_free(nodes);
-      DynArray_free(newNodes);
+      /*DynArray_free(newNodes);*/
       return NULL;
    }
    *result = '\0';
-   DynArray_map(newNodes, (void (*)(void *, void*)) FT_strcatAccumulate,
+   DynArray_map(nodes, (void (*)(void *, void*)) FT_strcatAccumulate,
                 (void *) result);
    DynArray_free(nodes);
-   DynArray_free(newNodes);
+   /*DynArray_free(newNodes);*/
    return result;
 }
