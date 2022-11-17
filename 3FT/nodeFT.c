@@ -423,12 +423,12 @@ int Node_compare(Node_T oNFirst, Node_T oNSecond) {
    assert(oNFirst != NULL);
    assert(oNSecond != NULL);
 
-   if(getType(oNFirst) && !getType(oNSecond)) {
+   /*if(getType(oNFirst) && !getType(oNSecond)) {
       return -1;
    }
    if(!getType(oNFirst) && getType(oNSecond)) {
       return 1;
-   }
+   }*/
 
    return Path_comparePath(oNFirst->oPPath, oNSecond->oPPath);
 }
