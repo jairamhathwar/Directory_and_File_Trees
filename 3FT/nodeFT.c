@@ -90,6 +90,7 @@ static int Node_compareDirString(const Node_T oNFirst,
                                  const char *pcSecond) {
    assert(oNFirst != NULL);
    assert(pcSecond != NULL);
+   assert(!getType(oNFirst));
 
    return Path_compareString(oNFirst->oPPath, pcSecond);
 }
@@ -98,6 +99,8 @@ static int Node_compareFileString(const Node_T oNFirst,
                                  const char *pcSecond) {
    assert(oNFirst != NULL);
    assert(pcSecond != NULL);
+   assert(getType(oNFirst))
+
 
    return Path_compareString(oNFirst->oPPath, pcSecond);
 }

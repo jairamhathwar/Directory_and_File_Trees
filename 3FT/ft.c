@@ -227,6 +227,7 @@ int FT_insertDir(const char *pcPath) {
          assert(CheckerFT_isValid(bIsInitialized, oNRoot, ulCount));
          return iStatus;
       }
+      /*if ft_containsfile*/
 
       /* insert the new node for this level */
       iStatus = Node_newDir(oPPrefix, oNCurr, &oNNewNode);
