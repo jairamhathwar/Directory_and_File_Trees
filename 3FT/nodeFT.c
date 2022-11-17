@@ -170,13 +170,14 @@ int Node_newFile(Path_T oPPath, Node_T oNParent, Node_T *poNResult,
       return NOT_A_DIRECTORY;
    }
    /* points to file contents with size of ulNewLength bytes*/ 
-   psNew->fileContents = malloc(ulNewLength);
+   
+   /*psNew->fileContents = malloc(ulNewLength);
    if(psNew->fileContents == NULL) {
       Path_free(psNew->oPPath);
       free(psNew);
       *poNResult = NULL;
       return MEMORY_ERROR;
-   }
+   }*/
    psNew->fileContents = pvNewContents;
    psNew->sizeContents = ulNewLength;
    /*update ftType to true*/
