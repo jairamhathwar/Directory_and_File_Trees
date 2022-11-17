@@ -157,7 +157,7 @@ int main(void) {
   free(temp);
 
   /* removing the root doesn't uninitialize the structure */
-  assert(FT_rmDir("1anotherroot") == CONFLICTING_PATH);
+  assert(FT_rmDir("1anotherroot") == CONFLICTING_PATH); /* */
   assert(FT_rmDir("1root") == SUCCESS);
   assert(FT_rmDir("1root") == NO_SUCH_PATH);
   assert(FT_containsDir("1root/2child") == FALSE);
@@ -191,7 +191,7 @@ int main(void) {
   assert(FT_stat("1root/H", &bIsFile, &l) == SUCCESS);
   assert(bIsFile == TRUE);
   assert(l == ARRLEN);
-  assert(FT_rmFile("1root/H") == SUCCESS);
+  assert(FT_rmFile("1root/H") == SUCCESS); /* broken */
   assert(FT_insertDir("1root/2d") == SUCCESS);
   assert(FT_stat("1root/2d", &bIsFile, &l) == SUCCESS);
   assert(bIsFile == FALSE);
