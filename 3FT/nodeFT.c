@@ -39,10 +39,10 @@ size_t getSizeContents(Node_T oNNode) {
 int setFileContents(Node_T oNNode, void *pvNewContents, size_t ulNewLength) {
    void* newFileContents;
    assert(oNNode!=NULL);
-   newFileContents = malloc(ulNewLength);
+   /*newFileContents = malloc(ulNewLength);
    if(newFileContents == NULL) {
       return MEMORY_ERROR;
-   }
+   }*/
    oNNode->sizeContents = ulNewLength;
    oNNode->fileContents = pvNewContents;
    return SUCCESS;
