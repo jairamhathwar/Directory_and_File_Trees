@@ -306,6 +306,8 @@ int Node_newDir(Path_T oPPath, Node_T oNParent, Node_T *poNResult) {
          return iStatus;
       }
    }
+
+   /*if "parent" is file cannot add*/
    else if (oNParent != NULL && getType(oNParent)){
       Path_free(psNew->oPPath);
       free(psNew);
@@ -420,6 +422,13 @@ Node_T Node_getParent(Node_T oNNode) {
 int Node_compare(Node_T oNFirst, Node_T oNSecond) {
    assert(oNFirst != NULL);
    assert(oNSecond != NULL);
+
+   if(getType(oNFirst)) && !getType(oNSecond)) {
+      return -1;
+   }
+   if(!getType(oNFirst) && getType(oNSecond)) {
+      return 1;
+   }
 
    return Path_comparePath(oNFirst->oPPath, oNSecond->oPPath);
 }

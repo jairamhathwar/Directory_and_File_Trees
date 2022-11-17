@@ -433,7 +433,7 @@ int FT_rmFile(const char *pcPath) {
    if(!getType(oNFound)) {
       return NOT_A_FILE;
    }
-   
+
    ulCount -= Node_free(oNFound);
    if(ulCount == 0)
       oNRoot = NULL;
