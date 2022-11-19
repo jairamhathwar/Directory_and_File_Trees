@@ -1,7 +1,5 @@
-/*--------------------------------------------------------------------*/
-/* ft.h                                                               */
-/* Author: Christopher Moretti and Vikash Modi '23                    */
-/*--------------------------------------------------------------------*/
+/* Functions used in ft.c and their corresponding
+parameters they take in.*/
 
 #ifndef FT_INCLUDED
 #define FT_INCLUDED

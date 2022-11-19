@@ -1,6 +1,5 @@
 #--------------------------------------------------------------------
 # Makefile for Assignment 4, Part 3 sample implementation
-# Author: Christopher Moretti
 #--------------------------------------------------------------------
 CC=gcc217
 

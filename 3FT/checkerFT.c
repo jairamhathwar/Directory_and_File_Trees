@@ -43,7 +43,8 @@ boolean CheckerFT_Node_isValid(Node_T oNNode) {
 /* Checks whether there are adjacent children nodes of the parent oNNode
 (oNChild and oNChildPrev) by passing ulIndex and if oNChildPrev is same
 as the passed in type of oNChild, performs validation checks for 
-duplicate paths and lexicographic order. 
+duplicate paths and lexicographic order. Returns FALSE if invariants
+detected and otherwise returns TRUE.
 Note: the ordering of files before directories appears in the toString
 method in ft.c*/
 static boolean checkNodeCompare(Node_T oNNode, Node_T oNChild, 
@@ -132,6 +133,7 @@ static boolean CheckerFT_treeCheck(Node_T oNNode, size_t *nodeCount) {
 /* see checkerFT.h for specification */
 boolean CheckerFT_isValid(boolean bIsInitialized, Node_T oNRoot,
                           size_t ulCount) {
+   /* initialize counter to 1 for root*/
    size_t counter = 1;
 
    /* Sample check on a top-level data structure invariant:
@@ -141,17 +143,16 @@ boolean CheckerFT_isValid(boolean bIsInitialized, Node_T oNRoot,
          fprintf(stderr, "Not initialized, but count is not 0\n");
          return FALSE;
       }
-
-   /* compare counter with other value (how many nodes should be there)
-      2 if statements */
    if(oNRoot == NULL) return TRUE;
-   if(getType(oNRoot)) return FALSE;
+   if(getType(oNRoot)) return FALSE; /* ensure root is not a file*/
 
+   /* compare absolute ulCount to counter variable from treeCheck */
    if(CheckerFT_treeCheck(oNRoot, &counter)) {
       if (counter != ulCount) {
          fprintf(stderr, "Total number of nodes do not match \n");
          return FALSE;
       }
+      /* only if all invariants are properly checked for return TRUE*/
       return TRUE;
    }
    return FALSE;

@@ -132,21 +132,41 @@ the error manifests itself or is "noticed" by the client.
 
       Executable         Function with the underlying error
 ===============================================================
-         ./bdtBad1        BDT_insert(const char *pcPath)
+         ./bdtBad1        BDT_insert()
 ---------------------------------------------------------------
-         ./bdtBad2        BDT_freeSubtree(struct node *psNode)
+         ./bdtBad2        BDT_freeSubtree()
 ---------------------------------------------------------------
-         ./bdtBad3        BDT_addChild(struct node *psParent, struct node *psChild)
+         ./bdtBad3        BDT_addChild()
 ---------------------------------------------------------------
-         ./bdtBad4        BDT_strlenAccumulate(struct node *psNode, size_t *pulAcc)
+         ./bdtBad4        BDT_strlenAccumulate()
 ---------------------------------------------------------------
-         ./bdtBad5        BDT_findNode(const char *pcPath, struct node **ppsResult)
+         ./bdtBad5        BDT_findNode()
 ===============================================================
 
 ------------------------------------------------------------------------
 What are your critiques of the given DT implementations, as
 specified in Step 2.5?
 
+There are many critiques to the given DT implementation. Firstly, the
+nodeDT, Node_getChild, Node_hasChild, and Node_new functions in
+nodeDTGood.c all have inconsistent parameter orders. For example,
+Node_getChild does not follow listing all types of parameters
+together, but instead separates Node_T types by a size_t.
 
+Furthermore, the Node_getChild and Node_hasChild functions in 
+nodeDTGood.c may also be considered redundant as Node_hasChild functions
+can be included easily within the functionality of Node_getChild by 
+returning some specific int for if the node has no child.
+
+Additionally, for the DT_toString method in dtGood.c it is also not
+needed for it have 3 helper functions when, for example, 
+DT_strlenAccumulate() just concatenates strings together using just an
+if statement. This function could easily be incorporated into the main
+DT_toString method.
+
+Also, for one of the helper functions called by the DT_toString method,
+DT_preOrderTraversal(), there is some questionable naming going on with
+all of the variables, as they are just random letters in the alphabet
+that do not reveal information about what they represent.
 
 ------------------------------------------------------------------------

@@ -1,7 +1,5 @@
-/*--------------------------------------------------------------------*/
-/* checkerDT.h                                                        */
-/* Author: Christopher Moretti                                        */
-/*--------------------------------------------------------------------*/
+/* Functions used in checkerDT.c and their corresponding
+parameters they take in.*/
 
 #ifndef CHECKER_INCLUDED
 #define CHECKER_INCLUDED

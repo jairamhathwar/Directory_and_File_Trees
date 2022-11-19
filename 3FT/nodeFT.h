@@ -7,15 +7,20 @@
 #include <stddef.h>
 #include "a4def.h"
 #include "path.h"
+
 /* A Node_T is a node in a Directory Tree */
 typedef struct node *Node_T;
+/* Returns the boolean type of oNNode: file(TRUE), directory (FALSE)*/
 boolean getType(Node_T oNNode);
+/* Returns a pointer to the file contents of oNNode*/
 void *getFileContents(Node_T oNNode);
-
+/* Returns the size of contents of oNNode */
 size_t getSizeContents(Node_T oNNode);
-
-int setFileContents(Node_T oNNode, void *pvNewContents, size_t ulNewLength);
-
+/* Sets the file contents of oNNode to pvNewContents and returns an int
+SUCCESS*/
+int setFileContents(Node_T oNNode, void *pvNewContents);
+/* Sets the size of contents of oNNode to ulNewLength and returns an
+int SUCCESS*/
 int setSizeContents(Node_T oNNode, size_t ulNewLength);
 
 /*
