@@ -66,7 +66,8 @@ static boolean CheckerDT_treeCheck(Node_T oNNode, size_t *dirCount) {
          iStatus = Node_getChild(oNNode, ulIndex, &oNChild);
          
          if(iStatus != SUCCESS) {
-            fprintf(stderr, "getNumChildren claims more children than getChild returns\n");
+            fprintf(stderr, "getNumChildren claims more children than 
+            getChild returns\n");
             return FALSE;
          }
 
@@ -74,11 +75,13 @@ static boolean CheckerDT_treeCheck(Node_T oNNode, size_t *dirCount) {
             /* compare current node to previous node */
             prevStatus = Node_getChild(oNNode, ulIndex-1, &oNChildPrev);
             if(prevStatus != SUCCESS) {
-               fprintf(stderr, "getNumChildren claims more children than getChild returns\n");
+               fprintf(stderr, "getNumChildren claims more children than
+                getChild returns\n");
                return FALSE;
             }
             /* if same paath, report duplicate path*/
-            nodeComparison = Path_comparePath(Node_getPath(oNChild), Node_getPath(oNChildPrev));
+            nodeComparison = Path_comparePath(Node_getPath(oNChild), 
+               Node_getPath(oNChildPrev));
             if(nodeComparison == 0) {
                fprintf(stderr, "Duplicate path detected in tree\n");
                return FALSE;
