@@ -403,7 +403,7 @@ int FT_destroy(void) {
    return SUCCESS;
 }
 /* see ft.h for specification*/
-void *FT_Node_getFileContents(const char *pcPath) {
+void *FT_getFileContents(const char *pcPath) {
     int iStatus;
     Node_T oNFound = NULL;
     assert(pcPath != NULL);
