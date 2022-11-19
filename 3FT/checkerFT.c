@@ -1,7 +1,7 @@
 /* Identifies and validates the file tree module. The implementation of
 these checker functions thoroughly exercise checks of every invariant of
- the data structures' internal representations and their interfaces' 
- stated restrictions. line */
+the data structures' internal representations and their interfaces' 
+stated restrictions */
 
 #include <assert.h>
 #include <stdio.h>
@@ -40,19 +40,49 @@ boolean CheckerFT_Node_isValid(Node_T oNNode) {
    return TRUE;
 }
 
-/*
-   Performs a pre-order traversal of the tree rooted at oNNode.
-   Returns FALSE if a broken invariant is found and
-   returns TRUE otherwise.
-
-   You may want to change this function's return type or
-   parameter list to facilitate constructing your checks.
-   If you do, you should update this function comment.
-*/
-static boolean CheckerFT_treeCheck(Node_T oNNode, size_t *nodeCount) {
-   size_t ulIndex;
+/* Checks whether there are adjacent children nodes of the parent oNNode
+(oNChild and oNChildPrev) by passing ulIndex and if oNChildPrev is same
+as the passed in type of oNChild, performs validation checks for 
+duplicate paths and lexicographic order. 
+Note: the ordering of files before directories appears in the toString
+method in ft.c*/
+static boolean checkNodeCompare(Node_T oNNode, Node_T oNChild, 
+   Node_T oNChildPrev, size_t ulIndex, boolean type) {
    int prevStatus;
    int nodeComparison;
+
+   if (ulIndex != 0) {
+      prevStatus = Node_getChild(oNNode, ulIndex-1, 
+         &oNChildPrev);
+
+      /* compare current node to previous node, staying 
+      consistent with the type */
+      if((prevStatus == NOT_A_DIRECTORY && type == TRUE) || 
+         prevStatus == SUCCESS && type == FALSE) {
+         nodeComparison = Path_comparePath(Node_getPath(oNChild), 
+            Node_getPath(oNChildPrev));
+         /* if same path, report duplicate path*/
+         if(nodeComparison == 0) {
+            fprintf(stderr, "Duplicate path detected in tree\n");
+            return FALSE;
+         }
+         /* report if lexicographically misordered*/
+         if(nodeComparison < 0) {
+            fprintf(stderr, "Children not in lexicographic order\n");
+            return FALSE;
+         }
+      }
+   }
+   return TRUE;
+}
+
+
+/* Performs a pre-order traversal of the tree rooted at oNNode. 
+   Increments the nodeCount for every node in tree.
+   Returns FALSE and prints message to stderr if a broken invariant is 
+   found and returns TRUE otherwise. */
+static boolean CheckerFT_treeCheck(Node_T oNNode, size_t *nodeCount) {
+   size_t ulIndex;
    int iStatus;
    
    if(oNNode!= NULL) {
@@ -68,33 +98,25 @@ static boolean CheckerFT_treeCheck(Node_T oNNode, size_t *nodeCount) {
          Node_T oNChildPrev = NULL;
          iStatus = Node_getChild(oNNode, ulIndex, &oNChild);
 
+         /* if it's a file, then perform file checks. ordering of files
+         first then directories handled in toString method of ft.c*/
          if (iStatus == NOT_A_DIRECTORY) {
+            if(!checkNodeCompare(oNNode, oNChild, oNChildPrev, 
+               ulIndex, TRUE)) return FALSE;
             *nodeCount = (*nodeCount)+1;
          }
+
+         /* if other broken invariant detected return FALSE*/
          else if(iStatus != SUCCESS) {
-            fprintf(stderr, "getNumChildren claims more children than getChild returns\n");
+            fprintf(stderr, 
+         "getNumChildren claims more children than getChild returns\n");
             return FALSE;
          }
 
+         /*if it's a directory then perform directory checks*/
          else {
-            if (ulIndex != 0) {
-               prevStatus = Node_getChild(oNNode, ulIndex-1, &oNChildPrev);
-               if(prevStatus != SUCCESS && prevStatus != NOT_A_DIRECTORY) {
-                  fprintf(stderr, "getNumChildren claims more children than getChild returns\n");
-                  return FALSE;
-               }
-               if(prevStatus != NOT_A_DIRECTORY) {
-                  nodeComparison = Path_comparePath(Node_getPath(oNChild), Node_getPath(oNChildPrev));
-                  if(nodeComparison == 0) {
-                     fprintf(stderr, "Duplicate path detected in tree\n");
-                     return FALSE;
-                  }
-                  if(nodeComparison < 0) {
-                     fprintf(stderr, "Children not in lexicographic order\n");
-                     return FALSE;
-                  }
-               }               
-            }
+            if(!checkNodeCompare(oNNode, oNChild, oNChildPrev, 
+               ulIndex, FALSE)) return FALSE;
             *nodeCount=(*nodeCount) + 1;
 
             /* if recurring down one subtree results in a failed check
@@ -103,9 +125,6 @@ static boolean CheckerFT_treeCheck(Node_T oNNode, size_t *nodeCount) {
                   return FALSE;
          }
       }
-      /* if a file and has no other siblings
-      if(getType(oNNode) && Node_getNumChildren(Node_getParent(oNNode)) == 1)
-         *nodeCount=(*nodeCount) + 1;*/
    }
    return TRUE;
 }

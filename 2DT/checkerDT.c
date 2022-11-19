@@ -65,9 +65,9 @@ static boolean CheckerDT_treeCheck(Node_T oNNode, size_t *dirCount) {
          iStatus = Node_getChild(oNNode, ulIndex, &oNChild);
          
          if(iStatus != SUCCESS) {
-         fprintf(stderr, 
+            fprintf(stderr, 
          "getNumChildren claims more children than getChild returns\n");
-         return FALSE;
+            return FALSE;
          }
 
          if (ulIndex != 0) {
