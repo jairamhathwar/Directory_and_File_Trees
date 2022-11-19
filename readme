@@ -96,15 +96,7 @@ your disagreements with them? Copy the splint warnings here, and
 express your disagreement after each warning. If there are no
 warnings, then write "None."
 
-"checkerDT.h:14:9: Function exported but not used outside checkerDT:
-CheckerDT_Node_isValid
-checkerDT.c:43:1: Definition of CheckerDT_Node_isValid"
-
-The above message was obtained for checkerDT.h and checkerDT.c, but
-it can be disregarded because the original given checkerDT.h already
-contained the CheckerDT_Node_isValid() function, so it is reasonable to
-expect to not need to make it a local helper function for checkerDT.c.
-Nonetheless, all of the invariants were still checked for properly.
+None
 
 ------------------------------------------------------------------------
 What warnings does critTer generate on checkerDT.c, and what are your
@@ -112,7 +104,7 @@ disagreements with them? Copy the critTer warnings here, and express
 your disagreement after each warning. If there are no warnings, then
 write "None."
 
-Besides the area being nested deeply, none.
+None
 
 ------------------------------------------------------------------------
 What warnings does splint generate on your Part 3 code, and what are
@@ -121,21 +113,18 @@ express your disagreement after each warning. If there are no
 warnings, then write "None."
  
 ft.c: (in function FT_traversePath)
-      ft.c:80:42: Variable ulChildID used before definition
-        An rvalue is used that may not be initialized to a value on some execution
-        path.
+      ft.c:79:42: Variable ulChildID used before definition
+        An rvalue is used that may not be initialized to a value on some
+        execution path.
 nodeFT.c: (in function Node_newFile)
-      nodeFT.c:145:48: Variable ulIndex used before definition
+      nodeFT.c:157:48: Variable ulIndex used before definition
       nodeFT.c: (in function Node_newDir)
-      nodeFT.c:246:48: Variable ulIndex used before definition
+      nodeFT.c:258:48: Variable ulIndex used before definition
       nodeFT.c: (in function Node_free)
-      nodeFT.c:286:35: Variable ulIndex used before definition
+      nodeFT.c:298:35: Variable ulIndex used before definition
 
 The above warning was given in the DT_traversePath() from part 2 in the
 code provided, so it was not altered here. 
-
-ft.h:69:9: Function exported but not used outside ft: FT_containsFile
-   ft.c:343:1: Definition of FT_containsFile
 
 ft.h:69:9: Function exported but not used outside ft: FT_containsFile
    ft.c:343:1: Definition of FT_containsFile
@@ -162,9 +151,6 @@ nodeFT.c: line 80: medium priority:
       Do you want to validate 'pvNewContents' through an assert?
 
 Contents can be null, so these critiques are invalid/unnecessary.
-
-checkerFT.c:
-
 
 ------------------------------------------------------------------------
 For each of the five faulty BDT implementations required by Step
