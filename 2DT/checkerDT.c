@@ -50,6 +50,8 @@ static boolean CheckerDT_treeCheck(Node_T oNNode, size_t *dirCount) {
    size_t ulIndex;
    int nodeComparison;
    int iStatus;
+
+   assert(dirCount!=NULL);
    
    if(oNNode!= NULL) {
       /* Sample check on each node: node must be valid */

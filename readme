@@ -96,7 +96,14 @@ your disagreements with them? Copy the splint warnings here, and
 express your disagreement after each warning. If there are no
 warnings, then write "None."
 
+"checkerDT.h:14:9: Function exported but not used outside checkerDT:
+CheckerDT_Node_isValid
+checkerDT.c:43:1: Definition of CheckerDT_Node_isValid"
 
+The above message was obtained for checkerDT.h and checkerDT.c, but
+it can be disregarded because the original given checkerDT.h already
+contained the CheckerDT_Node_isValid() function, so it is reasonable to
+expect to not need to make it a local helper function for checkerDT.c.
 
 ------------------------------------------------------------------------
 What warnings does critTer generate on checkerDT.c, and what are your
