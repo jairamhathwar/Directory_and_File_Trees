@@ -58,7 +58,7 @@ static boolean checkNodeCompare(Node_T oNNode, Node_T oNChild,
       /* compare current node to previous node, staying 
       consistent with the type */
       if((prevStatus == NOT_A_DIRECTORY && type == TRUE) || 
-         prevStatus == SUCCESS && type == FALSE) {
+         (prevStatus == SUCCESS && type == FALSE)) {
          nodeComparison = Path_comparePath(Node_getPath(oNChild), 
             Node_getPath(oNChildPrev));
          /* if same path, report duplicate path*/
