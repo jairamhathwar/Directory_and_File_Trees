@@ -73,7 +73,7 @@ static boolean CheckerDT_treeCheck(Node_T oNNode, size_t *dirCount) {
          if (ulIndex != 0) {
             /* compare current node to previous node */
             (void) Node_getChild(oNNode, ulIndex-1, &oNChildPrev);
-            /* if same paath, report duplicate path*/
+            /* if same path, report duplicate path*/
             nodeComparison = Path_comparePath(Node_getPath(oNChild), 
                Node_getPath(oNChildPrev));
             if(nodeComparison == 0) {
