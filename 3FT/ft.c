@@ -425,7 +425,7 @@ void *FT_replaceFileContents(const char *pcPath, void *pvNewContents,
         iStatus = FT_findNode(pcPath, &oNFound);
         if(iStatus != SUCCESS) return NULL;
         oldContents = getFileContents(oNFound); /* stores old contents*/
-        iStatus = setFileContents(oNFound, pvNewContents, ulNewLength);
+        iStatus = setFileContents(oNFound, pvNewContents);
         if(iStatus != SUCCESS) {
          return NULL;
         }
