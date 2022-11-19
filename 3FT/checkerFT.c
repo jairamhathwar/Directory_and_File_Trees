@@ -1,7 +1,7 @@
-/*--------------------------------------------------------------------*/
-/* checkerFT.c                                                        */
-/* Author:                                                            */
-/*--------------------------------------------------------------------*/
+/* Identifies and validates the file tree module. The implementation of
+these checker functions thoroughly exercise checks of every invariant of
+ the data structures' internal representations and their interfaces' 
+ stated restrictions. line */
 
 #include <assert.h>
 #include <stdio.h>
@@ -60,9 +60,6 @@ static boolean CheckerFT_treeCheck(Node_T oNNode, size_t *nodeCount) {
       /* If not, pass that failure back up immediately */
       if(!CheckerFT_Node_isValid(oNNode))
          return FALSE;
-
-      /* temp variable count. change return type to whatever count. use temp variable to store whatever it's returning*/
-      /* in for loop, counter increment for size of tree compare to other value. if different, print error. else, chill */
 
       /* Recur on every child of oNNode */
       for(ulIndex = 0; ulIndex < Node_getNumChildren(oNNode); ulIndex++)
