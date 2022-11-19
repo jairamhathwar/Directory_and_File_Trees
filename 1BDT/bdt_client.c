@@ -22,7 +22,7 @@ int main(void) {
      * toString should return NULL
   */
   assert(BDT_insert("1root/2child/3grandchild") == INITIALIZATION_ERROR);
-  assert(BDT_contains("1root/2child/3grandchild") == FALSE);
+  assert(BDT_contains("1root/2child/3gr   andchild") == FALSE);
   assert(BDT_rm("1root/2child/3grandchild") == INITIALIZATION_ERROR);
   assert((temp = BDT_toString()) == NULL);
   assert(BDT_destroy() == INITIALIZATION_ERROR);
