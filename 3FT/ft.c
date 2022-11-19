@@ -34,7 +34,7 @@ static size_t ulCount;
   Otherwise, sets *poNFurthest to NULL and returns with status:
   * CONFLICTING_PATH if the root's path is not a prefix of oPPath
   * MEMORY_ERROR if memory could not be allocated to complete request
-  * NOT_A_DIRECTORY lasjdf;lkajsdf
+  * NOT_A_DIRECTORY if common node was a file
 */
 static int FT_traversePath(Path_T oPPath, Node_T *poNFurthest) {
    int iStatus;
@@ -73,6 +73,7 @@ static int FT_traversePath(Path_T oPPath, Node_T *poNFurthest) {
          return iStatus;
       }
       if(Node_hasChild(oNCurr, oPPrefix, &ulChildID)) {
+         /*if(ulChildID!=NULL)*/
          /* go to that child and continue with next prefix */
          Path_free(oPPrefix);
          oPPrefix = NULL;
@@ -408,9 +409,8 @@ void *FT_getFileContents(const char *pcPath) {
     Node_T oNFound = NULL;
     assert(pcPath != NULL);
     
-    if(FT_containsFile(pcPath)) {
-        iStatus = FT_findNode(pcPath, &oNFound);
-    }
+    if(!FT_containsFile(pcPath)) return NULL;
+    iStatus = FT_findNode(pcPath, &oNFound);
     if(iStatus != SUCCESS) return NULL;
     return getFileContents(oNFound);
 }
