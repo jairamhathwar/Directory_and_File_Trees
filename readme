@@ -124,7 +124,8 @@ nodeFT.c: (in function Node_newFile)
       nodeFT.c:298:35: Variable ulIndex used before definition
 
 The above warning was given in the DT_traversePath() from part 2 in the
-code provided, so it was not altered here. 
+code provided, so it was not altered here for part 3 and so cannot be
+initialized.
 
 ft.h:69:9: Function exported but not used outside ft: FT_containsFile
    ft.c:343:1: Definition of FT_containsFile
