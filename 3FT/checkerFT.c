@@ -47,7 +47,7 @@ duplicate paths and lexicographic order. Returns FALSE if invariants
 detected and otherwise returns TRUE.
 Note: the ordering of files before directories appears in the toString
 method in ft.c*/
-static boolean CheckerFT_CheckerFT_checkNodeCompare(Node_T oNNode, 
+static boolean CheckerFT_checkNodeCompare(Node_T oNNode, 
    Node_T oNChild, Node_T oNChildPrev, size_t ulIndex, boolean type) {
    int prevStatus;
    int nodeComparison;
