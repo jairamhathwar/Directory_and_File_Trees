@@ -73,7 +73,6 @@ static int FT_traversePath(Path_T oPPath, Node_T *poNFurthest) {
          return iStatus;
       }
       if(Node_hasChild(oNCurr, oPPrefix, &ulChildID)) {
-         /*if(ulChildID!=NULL)*/
          /* go to that child and continue with next prefix */
          Path_free(oPPrefix);
          oPPrefix = NULL;
@@ -325,7 +324,7 @@ boolean FT_containsDir(const char *pcPath) {
    assert(pcPath != NULL);
    iStatus = FT_findNode(pcPath, &oNFound);
    if(iStatus == SUCCESS) {
-    if(!getType(oNFound)) return TRUE; /* ensures type is directory*/
+    if(!Node_getType(oNFound)) return TRUE; /* type is directory*/
    }
    return FALSE;
 }
@@ -337,7 +336,7 @@ boolean FT_containsFile(const char *pcPath) {
    assert(pcPath != NULL);
    iStatus = FT_findNode(pcPath, &oNFound);
    if(iStatus == SUCCESS) {
-    if(getType(oNFound)) return TRUE; /* ensures type is file*/
+    if(Node_getType(oNFound)) return TRUE; /* ensures type is file*/
    }
    return FALSE;
 }
@@ -350,7 +349,7 @@ int FT_rmDir(const char *pcPath) {
    iStatus = FT_findNode(pcPath, &oNFound);
    if(iStatus != SUCCESS)
        return iStatus;
-   if(getType(oNFound)) {
+   if(Node_getType(oNFound)) {
       return NOT_A_DIRECTORY; /* prevents removing file*/
    }
    ulCount -= Node_free(oNFound);
@@ -368,7 +367,7 @@ int FT_rmFile(const char *pcPath) {
    iStatus = FT_findNode(pcPath, &oNFound);
    if(iStatus != SUCCESS)
        return iStatus;
-   if(!getType(oNFound)) {
+   if(!Node_getType(oNFound)) {
       return NOT_A_FILE; /* prevents removing directory*/
    }
 
@@ -404,7 +403,7 @@ int FT_destroy(void) {
    return SUCCESS;
 }
 /* see ft.h for specification*/
-void *FT_getFileContents(const char *pcPath) {
+void *FT_Node_getFileContents(const char *pcPath) {
     int iStatus;
     Node_T oNFound = NULL;
     assert(pcPath != NULL);
@@ -412,7 +411,7 @@ void *FT_getFileContents(const char *pcPath) {
     if(!FT_containsFile(pcPath)) return NULL;
     iStatus = FT_findNode(pcPath, &oNFound);
     if(iStatus != SUCCESS) return NULL;
-    return getFileContents(oNFound);
+    return Node_getFileContents(oNFound);
 }
 /* see ft.h for specification*/
 void *FT_replaceFileContents(const char *pcPath, void *pvNewContents,
@@ -424,12 +423,12 @@ void *FT_replaceFileContents(const char *pcPath, void *pvNewContents,
     if(FT_containsFile(pcPath)) {
         iStatus = FT_findNode(pcPath, &oNFound);
         if(iStatus != SUCCESS) return NULL;
-        oldContents = getFileContents(oNFound); /* stores old contents*/
-        iStatus = setFileContents(oNFound, pvNewContents);
+        oldContents = Node_getFileContents(oNFound); 
+        iStatus = Node_setFileContents(oNFound, pvNewContents);
         if(iStatus != SUCCESS) {
          return NULL;
         }
-        iStatus = setSizeContents(oNFound, ulNewLength);
+        iStatus = Node_setSizeContents(oNFound, ulNewLength);
         if(iStatus != SUCCESS) return NULL;
         return oldContents;
     }
@@ -440,12 +439,14 @@ int FT_stat(const char *pcPath, boolean *pbIsFile, size_t *pulSize) {
     int iStatus;
     Node_T oNFound = NULL;
     assert(pcPath != NULL);
+    assert(pbIsFile!=NULL);
+    assert(pulSize!=NULL);
     
     iStatus = FT_findNode(pcPath, &oNFound);
     if (iStatus == SUCCESS) {
-        if (getType(oNFound)) {
+        if (Node_getType(oNFound)) {
             *pbIsFile = TRUE;
-            *pulSize = getSizeContents(oNFound);
+            *pulSize = Node_getSizeContents(oNFound);
         }
         else {
             *pbIsFile = FALSE;
@@ -475,7 +476,7 @@ static size_t FT_preOrderTraversal(Node_T n, DynArray_T d, size_t i) {
          Node_T oNChild = NULL;
          iStatus = Node_getChild(n,c, &oNChild);
          assert(iStatus == SUCCESS);
-         if(getType(oNChild))
+         if(Node_getType(oNChild))
             i = FT_preOrderTraversal(oNChild, d, i);
       }
       /* then goes through array and orders directories*/
@@ -484,7 +485,7 @@ static size_t FT_preOrderTraversal(Node_T n, DynArray_T d, size_t i) {
          Node_T oNChild = NULL;
          iStatus = Node_getChild(n,c, &oNChild);
          assert(iStatus == SUCCESS);
-         if(!getType(oNChild))
+         if(!Node_getType(oNChild))
             i = FT_preOrderTraversal(oNChild, d, i);
       }
    }

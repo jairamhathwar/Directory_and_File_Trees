@@ -47,8 +47,8 @@ duplicate paths and lexicographic order. Returns FALSE if invariants
 detected and otherwise returns TRUE.
 Note: the ordering of files before directories appears in the toString
 method in ft.c*/
-static boolean checkNodeCompare(Node_T oNNode, Node_T oNChild, 
-   Node_T oNChildPrev, size_t ulIndex, boolean type) {
+static boolean CheckerFT_CheckerFT_checkNodeCompare(Node_T oNNode, 
+   Node_T oNChild, Node_T oNChildPrev, size_t ulIndex, boolean type) {
    int prevStatus;
    int nodeComparison;
 
@@ -85,6 +85,8 @@ static boolean checkNodeCompare(Node_T oNNode, Node_T oNChild,
 static boolean CheckerFT_treeCheck(Node_T oNNode, size_t *nodeCount) {
    size_t ulIndex;
    int iStatus;
+
+   assert(nodeCount!=NULL);
    
    if(oNNode!= NULL) {
       /* Sample check on each node: node must be valid */
@@ -102,7 +104,7 @@ static boolean CheckerFT_treeCheck(Node_T oNNode, size_t *nodeCount) {
          /* if it's a file, then perform file checks. ordering of files
          first then directories handled in toString method of ft.c*/
          if (iStatus == NOT_A_DIRECTORY) {
-            if(!checkNodeCompare(oNNode, oNChild, oNChildPrev, 
+            if(!CheckerFT_checkNodeCompare(oNNode, oNChild, oNChildPrev, 
                ulIndex, TRUE)) return FALSE;
             *nodeCount = (*nodeCount)+1;
          }
@@ -116,7 +118,7 @@ static boolean CheckerFT_treeCheck(Node_T oNNode, size_t *nodeCount) {
 
          /*if it's a directory then perform directory checks*/
          else {
-            if(!checkNodeCompare(oNNode, oNChild, oNChildPrev, 
+            if(!CheckerFT_checkNodeCompare(oNNode, oNChild, oNChildPrev, 
                ulIndex, FALSE)) return FALSE;
             *nodeCount=(*nodeCount) + 1;
 
@@ -144,7 +146,7 @@ boolean CheckerFT_isValid(boolean bIsInitialized, Node_T oNRoot,
          return FALSE;
       }
    if(oNRoot == NULL) return TRUE;
-   if(getType(oNRoot)) return FALSE; /* ensure root is not a file*/
+   if(Node_getType(oNRoot)) return FALSE; /* ensure root is not a file*/
 
    /* compare absolute ulCount to counter variable from treeCheck */
    if(CheckerFT_treeCheck(oNRoot, &counter)) {

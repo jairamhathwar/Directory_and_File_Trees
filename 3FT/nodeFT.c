@@ -23,28 +23,28 @@ struct node {
 };
 
 /* see nodeFT.h for specification*/
-boolean getType(Node_T oNNode) {
+boolean Node_getType(Node_T oNNode) {
    assert(oNNode!=NULL);
    return oNNode->ftType;
 }
 /* see nodeFT.h for specification*/
-void *getFileContents(Node_T oNNode) {
+void *Node_getFileContents(Node_T oNNode) {
    assert(oNNode!=NULL);
    return oNNode->fileContents;
 }
 /* see nodeFT.h for specification*/
-size_t getSizeContents(Node_T oNNode) {
+size_t Node_getSizeContents(Node_T oNNode) {
    assert(oNNode!=NULL);
    return oNNode->sizeContents;
 }
 /* see nodeFT.h for specification*/
-int setFileContents(Node_T oNNode, void *pvNewContents) {
+int Node_setFileContents(Node_T oNNode, void *pvNewContents) {
    assert(oNNode!=NULL);
    oNNode->fileContents = pvNewContents;
    return SUCCESS;
 }
 /* see nodeFT.h for specification*/
-int setSizeContents(Node_T oNNode, size_t ulNewLength) {
+int Node_setSizeContents(Node_T oNNode, size_t ulNewLength) {
    assert(oNNode!=NULL);
    oNNode->sizeContents = ulNewLength;
    return SUCCESS;
@@ -75,6 +75,18 @@ static int Node_compareString(const Node_T oNFirst,
    assert(pcSecond != NULL);
    return Path_compareString(oNFirst->oPPath, pcSecond);
 }
+
+/*
+  Compares oNFirst and oNSecond lexicographically based on their paths.
+  Returns <0, 0, or >0 if onFirst is "less than", "equal to", or
+  "greater than" oNSecond, respectively.
+*/
+static int Node_compare(Node_T oNFirst, Node_T oNSecond) {
+   assert(oNFirst != NULL);
+   assert(oNSecond != NULL);
+   return Path_comparePath(oNFirst->oPPath, oNSecond->oPPath);
+}
+
 /* see nodeFT.h for specification*/
 int Node_newFile(Path_T oPPath, Node_T oNParent, Node_T *poNResult, 
                            void *pvNewContents, size_t ulNewLength) {
@@ -141,7 +153,7 @@ int Node_newFile(Path_T oPPath, Node_T oNParent, Node_T *poNResult,
    }
    psNew->oNParent = oNParent;
    /* Link into parent's children list */
-   if(oNParent != NULL && !getType(oNParent)) {
+   if(oNParent != NULL && !Node_Node_getType(oNParent)) {
       iStatus = Node_addChild(oNParent, psNew, ulIndex);
       if(iStatus != SUCCESS) {
          Path_free(psNew->oPPath);
@@ -151,7 +163,7 @@ int Node_newFile(Path_T oPPath, Node_T oNParent, Node_T *poNResult,
       }
    }
    /*check is parent is file and return NOT_A_DIRECTORY*/
-   else if (oNParent != NULL && getType(oNParent)){
+   else if (oNParent != NULL && Node_getType(oNParent)){
       Path_free(psNew->oPPath);
       free(psNew);
       *poNResult = NULL;
@@ -242,7 +254,7 @@ int Node_newDir(Path_T oPPath, Node_T oNParent, Node_T *poNResult) {
       return MEMORY_ERROR;
    }
    /* Link into parent's children list */
-   if(oNParent != NULL && !getType(oNParent)) {
+   if(oNParent != NULL && !Node_getType(oNParent)) {
       iStatus = Node_addChild(oNParent, psNew, ulIndex);
       if(iStatus != SUCCESS) {
          Path_free(psNew->oPPath);
@@ -252,7 +264,7 @@ int Node_newDir(Path_T oPPath, Node_T oNParent, Node_T *poNResult) {
       }
    }
    /*check is parent is file and return NOT_A_DIRECTORY*/
-   else if (oNParent != NULL && getType(oNParent)){
+   else if (oNParent != NULL && Node_getType(oNParent)){
       Path_free(psNew->oPPath);
       free(psNew);
       *poNResult = NULL;
@@ -286,7 +298,7 @@ size_t Node_free(Node_T oNNode) {
                                   ulIndex);
    }
    /* recursively remove children if directory */
-   if(!getType(oNNode)) {
+   if(!Node_getType(oNNode)) {
       while(DynArray_getLength(oNNode->oDChildren) != 0) {
          ulCount += Node_free(DynArray_get(oNNode->oDChildren, 0));
       }
@@ -348,13 +360,6 @@ int Node_getChild(Node_T oNParent, size_t ulChildID,
 Node_T Node_getParent(Node_T oNNode) {
    assert(oNNode != NULL);
    return oNNode->oNParent;
-}
-
-/* see nodeFT.h for specification*/
-int Node_compare(Node_T oNFirst, Node_T oNSecond) {
-   assert(oNFirst != NULL);
-   assert(oNSecond != NULL);
-   return Path_comparePath(oNFirst->oPPath, oNSecond->oPPath);
 }
 
 /* see nodeFT.h for specification*/

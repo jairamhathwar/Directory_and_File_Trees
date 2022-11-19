@@ -11,17 +11,17 @@
 /* A Node_T is a node in a Directory Tree */
 typedef struct node *Node_T;
 /* Returns the boolean type of oNNode: file(TRUE), directory (FALSE)*/
-boolean getType(Node_T oNNode);
+boolean Node_getType(Node_T oNNode);
 /* Returns a pointer to the file contents of oNNode*/
-void *getFileContents(Node_T oNNode);
+void *Node_getFileContents(Node_T oNNode);
 /* Returns the size of contents of oNNode */
-size_t getSizeContents(Node_T oNNode);
+size_t Node_getSizeContents(Node_T oNNode);
 /* Sets the file contents of oNNode to pvNewContents and returns an int
 SUCCESS*/
-int setFileContents(Node_T oNNode, void *pvNewContents);
+int Node_setFileContents(Node_T oNNode, void *pvNewContents);
 /* Sets the size of contents of oNNode to ulNewLength and returns an
 int SUCCESS*/
-int setSizeContents(Node_T oNNode, size_t ulNewLength);
+int Node_setSizeContents(Node_T oNNode, size_t ulNewLength);
 
 /*
   Creates a new node for directory in the Directory Tree, with path   
@@ -37,10 +37,10 @@ int setSizeContents(Node_T oNNode, size_t ulNewLength);
 */
 int Node_newDir(Path_T oPPath, Node_T oNParent, Node_T *poNResult);
 /*
-  Creates a new node for file in the Directory Tree, with path oPPath 
-  and parent oNParent. Returns an int SUCCESS status and sets *poNResult
-  to be the new node if successful. Otherwise, sets *poNResult to NULL
-  and returns status:
+  Creates a new node for file in the Directory Tree, with path oPPath,
+  parent oNParent, contents pvNewContents with size ulNewLength. 
+  Returns an int SUCCESS status and sets *poNResult to be the new node
+  if successful. Otherwise, sets *poNResult to NULL and returns status:
   * MEMORY_ERROR if memory could not be allocated to complete request
   * CONFLICTING_PATH if oNParent's path is not an ancestor of oPPath
   * NO_SUCH_PATH if oPPath is of depth 0
@@ -83,12 +83,7 @@ int Node_getChild(Node_T oNParent, size_t ulChildID,
   Returns NULL if oNNode is the root and thus has no parent.
 */
 Node_T Node_getParent(Node_T oNNode);
-/*
-  Compares oNFirst and oNSecond lexicographically based on their paths.
-  Returns <0, 0, or >0 if onFirst is "less than", "equal to", or
-  "greater than" oNSecond, respectively.
-*/
-int Node_compare(Node_T oNFirst, Node_T oNSecond);
+
 /*
   Returns a string representation for oNNode, or NULL if
   there is an allocation error.

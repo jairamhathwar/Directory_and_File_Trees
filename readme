@@ -119,8 +119,29 @@ What warnings does splint generate on your Part 3 code, and what are
 your disagreements with them? Copy the splint warnings here, and
 express your disagreement after each warning. If there are no
 warnings, then write "None."
+ 
+ft.c: (in function FT_traversePath)
+      ft.c:80:42: Variable ulChildID used before definition
+        An rvalue is used that may not be initialized to a value on some execution
+        path.
+nodeFT.c: (in function Node_newFile)
+      nodeFT.c:145:48: Variable ulIndex used before definition
+      nodeFT.c: (in function Node_newDir)
+      nodeFT.c:246:48: Variable ulIndex used before definition
+      nodeFT.c: (in function Node_free)
+      nodeFT.c:286:35: Variable ulIndex used before definition
 
+The above warning was given in the DT_traversePath() from part 2 in the
+code provided, so it was not altered here. 
 
+ft.h:69:9: Function exported but not used outside ft: FT_containsFile
+   ft.c:343:1: Definition of FT_containsFile
+
+ft.h:69:9: Function exported but not used outside ft: FT_containsFile
+   ft.c:343:1: Definition of FT_containsFile
+
+The ft.h was given to us and we not use it in our implementation, but
+we decided to not touch it in ft.h.
 
 ------------------------------------------------------------------------
 What warnings does critTer generate on your Part 3 code, and what are
@@ -128,6 +149,21 @@ your disagreements with them? Copy the critTer warnings here, and
 express your disagreement after each warning. If there are no
 warnings, then write "None."
 
+ft.c: line 227: medium priority:
+      Do you want to validate 'pvContents' through an assert?
+   
+ft.c: line 419: medium priority:
+      Do you want to validate 'pvNewContents' through an assert?
+
+nodeFT.c: line 41: medium priority:
+      Do you want to validate 'pvNewContents' through an assert?
+
+nodeFT.c: line 80: medium priority:
+      Do you want to validate 'pvNewContents' through an assert?
+
+Contents can be null, so these critiques are invalid/unnecessary.
+
+checkerFT.c:
 
 
 ------------------------------------------------------------------------
