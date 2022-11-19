@@ -48,7 +48,6 @@ boolean CheckerDT_Node_isValid(Node_T oNNode) {
    found returns TRUE otherwise. */
 static boolean CheckerDT_treeCheck(Node_T oNNode, size_t *dirCount) {
    size_t ulIndex;
-   int prevStatus;
    int nodeComparison;
    int iStatus;
    
@@ -73,11 +72,7 @@ static boolean CheckerDT_treeCheck(Node_T oNNode, size_t *dirCount) {
 
          if (ulIndex != 0) {
             /* compare current node to previous node */
-            prevStatus = Node_getChild(oNNode, ulIndex-1, &oNChildPrev);
-            /*if(prevStatus != SUCCESS) {
-               fprintf(stderr, "getNumChildren claims more children than getChild returns\n");
-               return FALSE;
-            }*/
+            (void) Node_getChild(oNNode, ulIndex-1, &oNChildPrev);
             /* if same paath, report duplicate path*/
             nodeComparison = Path_comparePath(Node_getPath(oNChild), 
                Node_getPath(oNChildPrev));
