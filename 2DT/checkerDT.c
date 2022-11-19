@@ -1,7 +1,8 @@
-/*--------------------------------------------------------------------*/
-/* checkerDT.c                                                        */
-/* Author:                                                            */
-/*--------------------------------------------------------------------*/
+/* Identifies all or nearly all of the buggy DTs' issues and reports
+them to stderr with a corresponding message. The implementation of these
+checker functions thoroughly exercise checks of every invariant of the 
+data structures' internal representations and their interfaces' stated 
+restrictions.*/
 
 #include <assert.h>
 #include <stdio.h>
@@ -41,15 +42,10 @@ boolean CheckerDT_Node_isValid(Node_T oNNode) {
    return TRUE;
 }
 
-/*
-   Performs a pre-order traversal of the tree rooted at oNNode.
-   Returns FALSE if a broken invariant is found and
-   returns TRUE otherwise.
-
-   You may want to change this function's return type or
-   parameter list to facilitate constructing your checks.
-   If you do, you should update this function comment.
-*/
+/* Performs a pre-order traversal of the tree rooted at oNNode.
+   Increments the dirCount for every node checked in tree.
+   Returns FALSE and prints message to stderr if a broken invariant is 
+   found returns TRUE otherwise. */
 static boolean CheckerDT_treeCheck(Node_T oNNode, size_t *dirCount) {
    size_t ulIndex;
    int prevStatus;
@@ -61,9 +57,6 @@ static boolean CheckerDT_treeCheck(Node_T oNNode, size_t *dirCount) {
       /* If not, pass that failure back up immediately */
       if(!CheckerDT_Node_isValid(oNNode))
          return FALSE;
-
-      /* temp variable count. change return type to whatever count. use temp variable to store whatever it's returning*/
-      /* in for loop, counter increment for size of tree compare to other value. if different, print error. else, chill */
 
       /* Recur on every child of oNNode */
       for(ulIndex = 0; ulIndex < Node_getNumChildren(oNNode); ulIndex++)
@@ -78,23 +71,25 @@ static boolean CheckerDT_treeCheck(Node_T oNNode, size_t *dirCount) {
          }
 
          if (ulIndex != 0) {
+            /* compare current node to previous node */
             prevStatus = Node_getChild(oNNode, ulIndex-1, &oNChildPrev);
             if(prevStatus != SUCCESS) {
                fprintf(stderr, "getNumChildren claims more children than getChild returns\n");
                return FALSE;
             }
-
+            /* if same paath, report duplicate path*/
             nodeComparison = Path_comparePath(Node_getPath(oNChild), Node_getPath(oNChildPrev));
             if(nodeComparison == 0) {
                fprintf(stderr, "Duplicate path detected in tree\n");
                return FALSE;
             }
+            /* report if lexicographically misordered*/
             if(nodeComparison < 0) {
                fprintf(stderr, "Children not in lexicographic order\n");
                return FALSE;
             }
          }
-
+          /* counter incremented for size of tree */
          *dirCount=(*dirCount) + 1;
 
          /* if recurring down one subtree results in a failed check
@@ -109,7 +104,7 @@ static boolean CheckerDT_treeCheck(Node_T oNNode, size_t *dirCount) {
 /* see checkerDT.h for specification */
 boolean CheckerDT_isValid(boolean bIsInitialized, Node_T oNRoot,
                           size_t ulCount) {
-   
+   /* initialize counter to 1 for root*/
    size_t counter = 1;
 
    /* Sample check on a top-level data structure invariant:
@@ -118,18 +113,16 @@ boolean CheckerDT_isValid(boolean bIsInitialized, Node_T oNRoot,
       if(ulCount != 0) {
          fprintf(stderr, "Not initialized, but count is not 0\n");
          return FALSE;
-      }
-
-   /* compare counter with other value (how many nodes should be there)
-      2  if statements */
-
+      }   
    if(oNRoot == NULL) return TRUE;
 
+   /* compare absolute ulCount to counter variable from treeCheck */
    if(CheckerDT_treeCheck(oNRoot, &counter)) {
       if (counter != ulCount) {
          fprintf(stderr, "Total number of directories do not match \n");
          return FALSE;
       }
+      /* only if all invariants are properly checked for return TRUE*/
       return TRUE;
    }
    return FALSE;
